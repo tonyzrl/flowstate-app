@@ -39,13 +39,24 @@ export default function CalendarScreen() {
     
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push({ day: null, events: 0, today: false, isEmpty: true });
+      days.push({ day: null, events: [], today: false, isEmpty: true });
     }
     
     // Add all days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      // Simulate some events for demonstration
-      const events = Math.floor(Math.random() * 4); // 0-3 events per day
+      // Simulate events for demonstration with colors
+      const events = [];
+      const eventColors = ['#EF4444', '#3B82F6', '#10B981', '#F59E0B']; // red, blue, green, yellow
+      const numEvents = Math.floor(Math.random() * 3); // 0-2 events per day
+      
+      for (let i = 0; i < numEvents; i++) {
+        events.push({
+          id: `${day}-${i}`,
+          color: eventColors[Math.floor(Math.random() * eventColors.length)],
+          type: ['exam', 'assignment', 'tutorial', 'meeting'][Math.floor(Math.random() * 4)]
+        });
+      }
+      
       const isToday = isCurrentMonth && day === todayDate;
       
       days.push({
@@ -142,7 +153,7 @@ export default function CalendarScreen() {
                 style={[
                   styles.calendarDay,
                   day.today && styles.todayDay,
-                  day.events > 0 && !day.isEmpty && styles.dayWithEvents,
+                  day.events.length > 0 && !day.isEmpty && styles.dayWithEvents,
                   day.isEmpty && styles.emptyDay,
                 ]}
                 disabled={day.isEmpty}
@@ -155,9 +166,21 @@ export default function CalendarScreen() {
                     ]}>
                       {day.day}
                     </Text>
-                    {day.events > 0 && (
-                      <View style={styles.eventDot}>
-                        <Text style={styles.eventCount}>{day.events}</Text>
+                    {day.events.length > 0 && (
+                      <View style={styles.eventDotsContainer}>
+                        {day.events.slice(0, 3).map((event, eventIndex) => (
+                          <View
+                            key={event.id}
+                            style={[
+                              styles.eventDot,
+                              { backgroundColor: event.color },
+                              eventIndex > 0 && { marginLeft: 2 }
+                            ]}
+                          />
+                        ))}
+                        {day.events.length > 3 && (
+                          <Text style={styles.moreEventsText}>+{day.events.length - 3}</Text>
+                        )}
                       </View>
                     )}
                   </>
@@ -336,21 +359,22 @@ const styles = StyleSheet.create({
   todayText: {
     color: '#FFFFFF',
   },
-  eventDot: {
+  eventDotsContainer: {
     position: 'absolute',
-    top: 2,
-    right: 2,
-    width: 12,
-    height: 12,
-    backgroundColor: '#EF4444',
-    borderRadius: 6,
+    bottom: 2,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  eventCount: {
+  eventDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  moreEventsText: {
     fontSize: 8,
     fontFamily: 'Inter-Bold',
-    color: '#FFFFFF',
+    color: '#6B7280',
+    marginLeft: 2,
   },
   deadlinesList: {
     marginTop: 8,
