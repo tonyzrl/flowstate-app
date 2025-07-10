@@ -69,7 +69,7 @@ export default function HomeScreen() {
 
   const profileTranslateY = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, -20],
+    outputRange: [0, -15],
     extrapolate: 'clamp',
   });
 
@@ -220,22 +220,28 @@ const styles = StyleSheet.create({
   heroContent: {
     flex: 1,
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingBottom: 30,
   },
   profileSection: {
     alignItems: 'flex-end',
-    paddingTop: 10,
+    paddingTop: 8,
+    paddingRight: 8,
   },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     borderWidth: 3,
     borderColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   greetingSection: {
     alignItems: 'flex-start',
+    paddingLeft: 4,
   },
   greeting: {
     fontSize: 24,
@@ -251,11 +257,10 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flex: 1,
-    marginTop: 260, // Start below the initial header height
+    marginTop: 280, // Match the HEADER_HEIGHT
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     backgroundColor: '#F3F4F6',
-    zIndex: 2,
   },
   contentPadding: {
     paddingHorizontal: 16,
