@@ -1,16 +1,19 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
 import Card from '@/components/Card';
 import ProgressBar from '@/components/ProgressBar';
 import StatCard from '@/components/StatCard';
 import { Brain, BookOpen, Target, Lightbulb } from 'lucide-react-native';
 
 export default function StudyScreen() {
+  const [selectedLearningStyle, setSelectedLearningStyle] = useState(1);
+
   const learningStyles = [
-    { id: 1, title: 'Visual', icon: '👁️', active: true },
-    { id: 2, title: 'Auditory', icon: '🎧', active: false },
-    { id: 3, title: 'Kinesthetic', icon: '✋', active: false },
-    { id: 4, title: 'Reading', icon: '📚', active: false },
+    { id: 1, title: 'Visual', icon: '👁️' },
+    { id: 2, title: 'Auditory', icon: '🎧' },
+    { id: 3, title: 'Kinesthetic', icon: '✋' },
+    { id: 4, title: 'Reading', icon: '📚' },
   ];
 
   const studySessions = [
@@ -39,10 +42,11 @@ export default function StudyScreen() {
             {learningStyles.map((style) => (
               <TouchableOpacity
                 key={style.id}
-                style={[styles.styleButton, style.active && styles.activeStyle]}
+                style={[styles.styleButton, selectedLearningStyle === style.id && styles.activeStyle]}
+                onPress={() => setSelectedLearningStyle(style.id)}
               >
                 <Text style={styles.styleIcon}>{style.icon}</Text>
-                <Text style={[styles.styleText, style.active && styles.activeStyleText]}>
+                <Text style={[styles.styleText, selectedLearningStyle === style.id && styles.activeStyleText]}>
                   {style.title}
                 </Text>
               </TouchableOpacity>
