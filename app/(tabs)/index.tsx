@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
 import ProgressBar from '@/components/ProgressBar';
@@ -11,11 +12,19 @@ export default function HomeScreen() {
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
 
-  const focusTasks = [
+  const [focusTasks, setFocusTasks] = useState([
     { id: 1, title: 'Complete Design Report', completed: false },
     { id: 2, title: 'Review Exam Notes', completed: true },
     { id: 3, title: 'Practice Mechanics Questions', completed: false },
-  ];
+  ]);
+
+  const toggleTask = (id: number) => {
+    setFocusTasks(tasks =>
+      tasks.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
 
   const upcomingEvents = [
     { id: 1, title: 'UNIT1000 Exam', date: 'Tomorrow 10:00 AM', type: 'exam' },
@@ -69,7 +78,11 @@ export default function HomeScreen() {
           <Card title="Focus for Today">
             <View style={styles.taskList}>
               {focusTasks.map((task) => (
-                <View key={task.id} style={styles.taskItem}>
+                <TouchableOpacity
+                  key={task.id}
+                  style={styles.taskItem}
+                  onPress={() => toggleTask(task.id)}
+                >
                   <CheckCircle
                     size={20}
                     color={task.completed ? '#10B981' : '#D1D5DB'}
@@ -78,7 +91,7 @@ export default function HomeScreen() {
                   <Text style={[styles.taskText, task.completed && styles.completedTask]}>
                     {task.title}
                   </Text>
-                </View>
+                </TouchableOpacity>
               ))}
             </View>
           </Card>
