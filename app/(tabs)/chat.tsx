@@ -13,6 +13,7 @@ export default function ChatScreen() {
   ]);
 
   const [search, setSearch] = useState(''); // <-- Added for search bar
+  const [selectedType, setSelectedType] = useState<string | null>(null); // <-- NEW
 
   const contacts = [
     { id: 1, name: 'Sarah Chen', role: 'Study Partner', status: 'online', type: 'student' },
@@ -22,7 +23,8 @@ export default function ChatScreen() {
   ];
 
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(search.toLowerCase())
+    contact.name.toLowerCase().includes(search.toLowerCase()) &&
+    (!selectedType || contact.type === selectedType) // <-- UPDATED
   ); // <-- Filter contacts by search
 
   const suggestedContacts = [
@@ -115,6 +117,30 @@ export default function ChatScreen() {
               marginBottom: 12,
             }}
           />
+          {/* Filter Buttons */}
+          <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+            {['All', 'student', 'tutor', 'teacher', 'group'].map(type => (
+              <TouchableOpacity
+                key={type}
+                style={{
+                  paddingVertical: 6,
+                  paddingHorizontal: 14,
+                  borderRadius: 16,
+                  backgroundColor: selectedType === type || (type === 'All' && !selectedType) ? '#3B82F6' : '#E5E7EB',
+                  marginRight: 8,
+                }}
+                onPress={() => setSelectedType(type === 'All' ? null : type)}
+              >
+                <Text style={{
+                  color: selectedType === type || (type === 'All' && !selectedType) ? '#fff' : '#1F2937',
+                  fontSize: 14,
+                }}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {/* Contacts List */}
           <View style={styles.contactsList}>
             {filteredContacts.map((contact) => (
               <TouchableOpacity key={contact.id} style={styles.contactItem}>
