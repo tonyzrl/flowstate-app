@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
   },
   heroSection: {
-    height: 280,
+    height: 200,
     position: 'relative',
   },
   heroBackground: {
