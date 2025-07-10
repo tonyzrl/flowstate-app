@@ -12,7 +12,7 @@ export default function ChatScreen() {
     { id: 3, text: 'I understand. Based on your study patterns, I suggest using the Pomodoro Technique. Would you like me to create a personalized schedule for you?', sender: 'ai' },
   ]);
 
-  const [search, setSearch] = useState(''); // <-- Added for search bar
+  const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null); // <-- NEW
 
   const contacts = [
@@ -22,10 +22,18 @@ export default function ChatScreen() {
     { id: 4, name: 'UNIT2001 Study Group', role: '21 members', status: 'active', type: 'group' },
   ];
 
+  const contactTypes = [
+    { label: 'All', value: null },
+    { label: 'Student', value: 'student' },
+    { label: 'Tutor', value: 'tutor' },
+    { label: 'Teacher', value: 'teacher' },
+    { label: 'Group', value: 'group' },
+  ];
+
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(search.toLowerCase()) &&
-    (!selectedType || contact.type === selectedType) // <-- UPDATED
-  ); // <-- Filter contacts by search
+    (!selectedType || contact.type === selectedType)
+  );
 
   const suggestedContacts = [
     { id: 1, name: 'Assc. Prof. Emma Wilson', role: 'UNIT3034 Lecturer', type: 'staff' },
@@ -103,7 +111,7 @@ export default function ChatScreen() {
         </Card>
 
         <Card title="Your Contacts">
-          {/* Search Bar for Contacts */}
+          {/* Search Bar */}
           <TextInput
             placeholder="Search contacts..."
             value={search}
@@ -119,23 +127,23 @@ export default function ChatScreen() {
           />
           {/* Filter Buttons */}
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
-            {['All', 'student', 'tutor', 'teacher', 'group'].map(type => (
+            {contactTypes.map(type => (
               <TouchableOpacity
-                key={type}
+                key={type.label}
                 style={{
                   paddingVertical: 6,
                   paddingHorizontal: 14,
                   borderRadius: 16,
-                  backgroundColor: selectedType === type || (type === 'All' && !selectedType) ? '#3B82F6' : '#E5E7EB',
+                  backgroundColor: selectedType === type.value || (type.value === null && !selectedType) ? '#3B82F6' : '#E5E7EB',
                   marginRight: 8,
                 }}
-                onPress={() => setSelectedType(type === 'All' ? null : type)}
+                onPress={() => setSelectedType(type.value)}
               >
                 <Text style={{
-                  color: selectedType === type || (type === 'All' && !selectedType) ? '#fff' : '#1F2937',
+                  color: selectedType === type.value || (type.value === null && !selectedType) ? '#fff' : '#1F2937',
                   fontSize: 14,
                 }}>
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                  {type.label}
                 </Text>
               </TouchableOpacity>
             ))}
