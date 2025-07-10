@@ -72,7 +72,7 @@ export default function WellbeingScreen() {
           </View>
         </Card>
 
-        <Card title="AI Wellbeing Insights">
+        <Card title="Companion Wellbeing Insights">
           <View style={styles.suggestionList}>
             {wellbeingSuggestions.map((suggestion, index) => (
               <View key={index} style={styles.suggestionItem}>

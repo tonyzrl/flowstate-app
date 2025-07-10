@@ -7,19 +7,19 @@ import StatCard from '@/components/StatCard';
 import { CircleCheck as CheckCircle, Clock, Target, Lightbulb } from 'lucide-react-native';
 
 export default function HomeScreen() {
-  const userName = "Jimmy";
+  const userName = "Andrei";
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
 
   const focusTasks = [
-    { id: 1, title: 'Complete Math Assignment', completed: false },
-    { id: 2, title: 'Review Chemistry Notes', completed: true },
-    { id: 3, title: 'Practice Spanish Vocabulary', completed: false },
+    { id: 1, title: 'Complete Design Report', completed: false },
+    { id: 2, title: 'Review Exam Notes', completed: true },
+    { id: 3, title: 'Practice Mechanics Questions', completed: false },
   ];
 
   const upcomingEvents = [
-    { id: 1, title: 'Physics Exam', date: 'Tomorrow 10:00 AM', type: 'exam' },
-    { id: 2, title: 'Literature Essay Due', date: 'Friday 11:59 PM', type: 'assignment' },
+    { id: 1, title: 'UNIT1000 Exam', date: 'Tomorrow 10:00 AM', type: 'exam' },
+    { id: 2, title: 'Design Report Due', date: 'Friday 11:59 PM', type: 'assignment' },
     { id: 3, title: 'Study Group Meeting', date: 'Saturday 2:00 PM', type: 'meeting' },
   ];
 
@@ -99,7 +99,7 @@ export default function HomeScreen() {
             </View>
           </Card>
 
-          <Card title="AI Suggestions">
+          <Card title="Companion Suggestions">
             <View style={styles.suggestionList}>
               {suggestions.map((suggestion, index) => (
                 <View key={index} style={styles.suggestionItem}>

@@ -14,15 +14,15 @@ export default function ChatScreen() {
 
   const contacts = [
     { id: 1, name: 'Sarah Chen', role: 'Study Partner', status: 'online', type: 'student' },
-    { id: 2, name: 'Prof. Johnson', role: 'Physics Teacher', status: 'offline', type: 'teacher' },
-    { id: 3, name: 'Mike Rodriguez', role: 'Math Tutor', status: 'online', type: 'tutor' },
-    { id: 4, name: 'Study Group A', role: '5 members', status: 'active', type: 'group' },
+    { id: 2, name: 'Ray Johnson', role: 'UNIT2001 Tutor', status: 'offline', type: 'tutor' },
+    { id: 3, name: 'Dr. Mike Rodriguez', role: 'Course Coordinator', status: 'online', type: 'teacher' },
+    { id: 4, name: 'UNIT2001 Study Group', role: '21 members', status: 'active', type: 'group' },
   ];
 
   const suggestedContacts = [
-    { id: 1, name: 'Emma Wilson', role: 'Chemistry Study Group', type: 'group' },
-    { id: 2, name: 'Dr. Smith', role: 'Academic Advisor', type: 'staff' },
-    { id: 3, name: 'Alex Kim', role: 'Literature Class', type: 'student' },
+    { id: 1, name: 'Assc. Prof. Emma Wilson', role: 'UNIT3034 Lecturer', type: 'staff' },
+    { id: 2, name: 'Dr. Jason Smith', role: 'Academic Advisor', type: 'staff' },
+    { id: 3, name: 'Alex Kim', role: 'UNIT2001 Study Group', type: 'student' },
   ];
 
   const chatSuggestions = [
@@ -40,7 +40,7 @@ export default function ChatScreen() {
       setTimeout(() => {
         setMessages(prev => [...prev, { 
           id: prev.length + 1, 
-          text: 'I\'m here to help! Let me analyze your study patterns and provide personalized recommendations.', 
+          text: 'I\'m here to help! Let me analyze your study patterns and provide personalised recommendations.', 
           sender: 'ai' 
         }]);
       }, 1000);

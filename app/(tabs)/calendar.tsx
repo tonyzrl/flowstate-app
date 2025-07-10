@@ -8,8 +8,8 @@ export default function CalendarScreen() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 6, 1)); // July 2025
 
   const dailyHighlights = [
-    { id: 1, title: 'Physics Exam', time: '10:00 AM', type: 'exam', color: '#EF4444' },
-    { id: 2, title: 'Math Tutorial', time: '2:00 PM', type: 'class', color: '#3B82F6' },
+    { id: 1, title: 'UNIT2001 Exam', time: '10:00 AM', type: 'exam', color: '#EF4444' },
+    { id: 2, title: 'UNIT3034 Tutorial', time: '2:00 PM', type: 'class', color: '#3B82F6' },
     { id: 3, title: 'Study Group', time: '4:30 PM', type: 'meeting', color: '#10B981' },
   ];
 
@@ -179,21 +179,21 @@ export default function CalendarScreen() {
             <View style={styles.deadlineItem}>
               <AlertCircle size={16} color="#F59E0B" />
               <View style={styles.deadlineContent}>
-                <Text style={styles.deadlineTitle}>Chemistry Lab Report</Text>
+                <Text style={styles.deadlineTitle}>Design Report</Text>
                 <Text style={styles.deadlineDate}>Due in 5 days</Text>
               </View>
             </View>
             <View style={styles.deadlineItem}>
               <AlertCircle size={16} color="#10B981" />
               <View style={styles.deadlineContent}>
-                <Text style={styles.deadlineTitle}>Math Problem Set</Text>
+                <Text style={styles.deadlineTitle}>Mechanics Problem Set</Text>
                 <Text style={styles.deadlineDate}>Due in 1 week</Text>
               </View>
             </View>
           </View>
         </Card>
 
-        <Card title="AI Schedule Insights">
+        <Card title="Companion Schedule Insights">
           <View style={styles.suggestionList}>
             {calendarSuggestions.map((suggestion, index) => (
               <View key={index} style={styles.suggestionItem}>

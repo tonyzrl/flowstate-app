@@ -17,10 +17,10 @@ export default function StudyScreen() {
   ];
 
   const studySessions = [
-    { subject: 'Mathematics', duration: '2h 30m', date: 'Today', focus: 95 },
-    { subject: 'Physics', duration: '1h 45m', date: 'Yesterday', focus: 87 },
-    { subject: 'Chemistry', duration: '3h 15m', date: 'Dec 10', focus: 92 },
-    { subject: 'Biology', duration: '2h 10m', date: 'Dec 9', focus: 78 },
+    { subject: 'UNIT2001', duration: '2h 30m', date: 'Today', focus: 95 },
+    { subject: 'UNIT3034', duration: '1h 45m', date: 'Yesterday', focus: 87 },
+    { subject: 'UNIT3045', duration: '3h 15m', date: 'Jul 10', focus: 92 },
+    { subject: 'UNIT2003', duration: '2h 10m', date: 'Jul 9', focus: 78 },
   ];
 
   const studySuggestions = [
@@ -98,7 +98,7 @@ export default function StudyScreen() {
           </View>
         </Card>
 
-        <Card title="AI Study Insights">
+        <Card title="Companion Study Insights">
           <View style={styles.suggestionList}>
             {studySuggestions.map((suggestion, index) => (
               <View key={index} style={styles.suggestionItem}>
