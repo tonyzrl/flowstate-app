@@ -29,6 +29,49 @@ export default function StudyScreen() {
     'Your retention improves by 23% when you review material within 24 hours.',
   ];
 
+  const learningStyleSuggestions: Record<number, { title: string; icon: string; tips: string[] }> = {
+    1: {
+      title: 'Visual Learners',
+      icon: '👁️',
+      tips: [
+        'Use diagrams, mind maps, and flowcharts',
+        'Colour-code notes to group ideas',
+        'Watch explainer videos or animations',
+        'Study with flashcards that include images or symbols',
+      ],
+    },
+    2: {
+      title: 'Auditory Learners',
+      icon: '🎧',
+      tips: [
+        'Listen to podcasts or recorded lectures',
+        'Talk through concepts out loud',
+        'Use text-to-speech tools or voice notes',
+        'Join study groups or discussion sessions',
+      ],
+    },
+    3: {
+      title: 'Kinesthetic Learners',
+      icon: '🖐️',
+      tips: [
+        'Write notes by hand or use a whiteboard',
+        'Study while walking or moving',
+        'Roleplay scenarios or real-world applications',
+        'Use physical flashcards or sorting games',
+      ],
+    },
+    4: {
+      title: 'Reading/Writing Learners',
+      icon: '📖',
+      tips: [
+        'Rewrite notes in your own words',
+        'Highlight and annotate key sections',
+        'Make lists, summaries, and definitions',
+        'Practice with written quizzes or short answers',
+      ],
+    },
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -50,6 +93,15 @@ export default function StudyScreen() {
                   {style.title}
                 </Text>
               </TouchableOpacity>
+            ))}
+          </View>
+          {/* Learning style suggestions panel */}
+          <View style={styles.suggestionPanel}>
+            <Text style={styles.suggestionPanelTitle}>
+              {learningStyleSuggestions[selectedLearningStyle].icon} {learningStyleSuggestions[selectedLearningStyle].title}
+            </Text>
+            {learningStyleSuggestions[selectedLearningStyle].tips.map((tip, idx) => (
+              <Text key={idx} style={styles.suggestionPanelTip}>• {tip}</Text>
             ))}
           </View>
         </Card>
@@ -240,5 +292,22 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
     lineHeight: 20,
+  },
+  suggestionPanel: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 12,
+  },
+  suggestionPanelTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  suggestionPanelTip: {
+    fontSize: 14,
+    color: '#374151',
+    marginBottom: 4,
+    marginLeft: 8,
   },
 });
