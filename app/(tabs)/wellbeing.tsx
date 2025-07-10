@@ -1,10 +1,12 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
 import { Heart, Headphones, Play, Lightbulb } from 'lucide-react-native';
 
 export default function WellbeingScreen() {
+  const [show360, setShow360] = useState(false);
   const recentMoods = [
     { day: 'Mon', mood: '😊', score: 85 },
     { day: 'Tue', mood: '🙂', score: 75 },
@@ -58,7 +60,13 @@ export default function WellbeingScreen() {
         <Card title="Support & Resources">
           <View style={styles.supportGrid}>
             {supportOptions.map((option) => (
-              <TouchableOpacity key={option.id} style={styles.supportCard}>
+              <TouchableOpacity
+                key={option.id}
+                style={styles.supportCard}
+                onPress={() => {
+                  if (option.icon === 'vr') setShow360(true);
+                }}
+              >
                 <View style={styles.supportIcon}>
                   {option.icon === 'meditation' && <Heart size={24} color="#8B5CF6" />}
                   {option.icon === 'breathing' && <Heart size={24} color="#10B981" />}
@@ -71,6 +79,38 @@ export default function WellbeingScreen() {
             ))}
           </View>
         </Card>
+
+        {/* 360 Video Player, only shown when show360 is true */}
+        {show360 && (
+          <Card title="360° Calming Video">
+            <View style={{ height: 260, borderRadius: 12, overflow: 'hidden', backgroundColor: '#000', position: 'relative' }}>
+              {/* Close button */}
+              <TouchableOpacity
+                style={{ position: 'absolute', top: 8, right: 8, zIndex: 2, backgroundColor: '#fff', borderRadius: 16, padding: 4 }}
+                onPress={() => setShow360(false)}
+              >
+                <Text style={{ color: '#000', fontWeight: 'bold' }}>X</Text>
+              </TouchableOpacity>
+              {Platform.OS === 'web' ? (
+                <iframe
+                  src="/360player.html"
+                  width="100%"
+                  height="240"
+                  style={{ border: 0, borderRadius: 12, width: '100%', height: '100%' }}
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="360 Calming Video"
+                />
+              ) : (
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ color: '#fff', textAlign: 'center' }}>
+                    360° video is available on the web version only.
+                  </Text>
+                </View>
+              )}
+            </View>
+          </Card>
+        )}
 
         <Card title="Companion Wellbeing Insights">
           <View style={styles.suggestionList}>
