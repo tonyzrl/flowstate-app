@@ -1,7 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Image, Animated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useRef } from 'react';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
 import ProgressBar from '@/components/ProgressBar';
@@ -12,11 +10,6 @@ export default function HomeScreen() {
   const userName = "Jimmy";
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
-
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const HEADER_HEIGHT = 280;
-  const HEADER_MIN_HEIGHT = 100;
-  const HEADER_SCROLL_DISTANCE = HEADER_HEIGHT - HEADER_MIN_HEIGHT;
 
   const focusTasks = [
     { id: 1, title: 'Complete Math Assignment', completed: false },
@@ -36,159 +29,67 @@ export default function HomeScreen() {
     'Try the Pomodoro Technique for better time management',
   ];
 
-  // Animated values for header collapse
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_HEIGHT, HEADER_MIN_HEIGHT],
-    extrapolate: 'clamp',
-  });
-
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-    outputRange: [1, 0.5, 0],
-    extrapolate: 'clamp',
-  });
-
-  const greetingOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 3],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
-
-  const greetingTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE / 2],
-    outputRange: [0, -50],
-    extrapolate: 'clamp',
-  });
-
-  const profileScale = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [1, 0.7],
-    extrapolate: 'clamp',
-  });
-
-  const profileTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, -15],
-    extrapolate: 'clamp',
-  });
-
   return (
-    <View style={styles.container}>
-      {/* Animated Hero Section */}
-      <Animated.View style={[styles.heroSection, { height: headerHeight }]}>
-        <Image
-          source={{ uri: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800' }}
-          style={styles.backgroundImage}
-        />
-        <Animated.View style={[styles.overlay, { opacity: headerOpacity }]}>
-          <LinearGradient
-            colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.6)']}
-            style={StyleSheet.absoluteFillObject}
-          />
-        </Animated.View>
-        
-        <SafeAreaView style={styles.heroContent}>
-          <Animated.View 
-            style={[
-              styles.profileSection,
-              {
-                transform: [
-                  { scale: profileScale },
-                  { translateY: profileTranslateY }
-                ]
-              }
-            ]}
-          >
-            <Image
-              source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150' }}
-              style={styles.profileImage}
-            />
-          </Animated.View>
-          
-          <Animated.View 
-            style={[
-              styles.greetingSection,
-              {
-                opacity: greetingOpacity,
-                transform: [{ translateY: greetingTranslateY }]
-              }
-            ]}
-          >
-            <Text style={styles.greeting}>{greeting},</Text>
-            <Text style={styles.userName}>{userName}</Text>
-          </Animated.View>
-        </SafeAreaView>
-      </Animated.View>
-
-      {/* Content Section with Animated ScrollView */}
-      <Animated.ScrollView
-        style={styles.contentSection}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
-      >
-        <View style={styles.contentPadding}>
-          <Card title="Today's Overview">
-            <View style={styles.statsRow}>
-              <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />
-              <StatCard title="Study Time" value="4.5h" subtitle="Today" color="#3B82F6" />
-              <StatCard title="Focus Score" value="85%" subtitle="↑ 5%" color="#8B5CF6" />
-            </View>
-          </Card>
-
-          <Card title="Focus for Today">
-            <View style={styles.taskList}>
-              {focusTasks.map((task) => (
-                <View key={task.id} style={styles.taskItem}>
-                  <CheckCircle
-                    size={20}
-                    color={task.completed ? '#10B981' : '#D1D5DB'}
-                    fill={task.completed ? '#10B981' : 'transparent'}
-                  />
-                  <Text style={[styles.taskText, task.completed && styles.completedTask]}>
-                    {task.title}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </Card>
-
-          <Card title="Upcoming Events">
-            <View style={styles.eventList}>
-              {upcomingEvents.map((event) => (
-                <View key={event.id} style={styles.eventItem}>
-                  <View style={styles.eventIcon}>
-                    <Clock size={16} color="#6B7280" />
-                  </View>
-                  <View style={styles.eventContent}>
-                    <Text style={styles.eventTitle}>{event.title}</Text>
-                    <Text style={styles.eventDate}>{event.date}</Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-          </Card>
-
-          <Card title="AI Suggestions">
-            <View style={styles.suggestionList}>
-              {suggestions.map((suggestion, index) => (
-                <View key={index} style={styles.suggestionItem}>
-                  <Lightbulb size={16} color="#F59E0B" />
-                  <Text style={styles.suggestionText}>{suggestion}</Text>
-                </View>
-              ))}
-            </View>
-          </Card>
-
-          {/* Extra padding at bottom for better scrolling experience */}
-          <View style={styles.bottomPadding} />
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>{greeting}, {userName}!</Text>
+          <Text style={styles.subtitle}>Let's make today productive</Text>
         </View>
-      </Animated.ScrollView>
-    </View>
+
+        <Card title="Today's Overview">
+          <View style={styles.statsRow}>
+            <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />
+            <StatCard title="Study Time" value="4.5h" subtitle="Today" color="#3B82F6" />
+            <StatCard title="Focus Score" value="85%" subtitle="↑ 5%" color="#8B5CF6" />
+          </View>
+        </Card>
+
+        <Card title="Focus for Today">
+          <View style={styles.taskList}>
+            {focusTasks.map((task) => (
+              <View key={task.id} style={styles.taskItem}>
+                <CheckCircle
+                  size={20}
+                  color={task.completed ? '#10B981' : '#D1D5DB'}
+                  fill={task.completed ? '#10B981' : 'transparent'}
+                />
+                <Text style={[styles.taskText, task.completed && styles.completedTask]}>
+                  {task.title}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </Card>
+
+        <Card title="Upcoming Events">
+          <View style={styles.eventList}>
+            {upcomingEvents.map((event) => (
+              <View key={event.id} style={styles.eventItem}>
+                <View style={styles.eventIcon}>
+                  <Clock size={16} color="#6B7280" />
+                </View>
+                <View style={styles.eventContent}>
+                  <Text style={styles.eventTitle}>{event.title}</Text>
+                  <Text style={styles.eventDate}>{event.date}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </Card>
+
+        <Card title="AI Suggestions">
+          <View style={styles.suggestionList}>
+            {suggestions.map((suggestion, index) => (
+              <View key={index} style={styles.suggestionItem}>
+                <Lightbulb size={16} color="#F59E0B" />
+                <Text style={styles.suggestionText}>{suggestion}</Text>
+              </View>
+            ))}
+          </View>
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -197,74 +98,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F4F6',
   },
-  heroSection: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    overflow: 'hidden',
-  },
-  backgroundImage: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  heroContent: {
+  scrollView: {
     flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingBottom: 30,
+    paddingHorizontal: 16,
   },
-  profileSection: {
-    alignItems: 'flex-end',
-    paddingTop: 8,
-    paddingRight: 8,
-  },
-  profileImage: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    borderWidth: 3,
-    borderColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-  },
-  greetingSection: {
-    alignItems: 'flex-start',
-    paddingLeft: 4,
+  header: {
+    paddingVertical: 24,
   },
   greeting: {
-    fontSize: 24,
-    fontFamily: 'Inter-Regular',
-    color: '#FFFFFF',
-    opacity: 0.9,
-  },
-  userName: {
-    fontSize: 42,
+    fontSize: 28,
     fontFamily: 'Poppins-SemiBold',
-    color: '#FFFFFF',
-    marginTop: -5,
+    color: '#1F2937',
   },
-  contentSection: {
-    flex: 1,
-    marginTop: 280, // Match the HEADER_HEIGHT
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    backgroundColor: '#F3F4F6',
-  },
-  contentPadding: {
-    paddingHorizontal: 16,
-    paddingTop: 24,
+  subtitle: {
+    fontSize: 16,
+    fontFamily: 'Inter-Regular',
+    color: '#6B7280',
+    marginTop: 4,
   },
   statsRow: {
     flexDirection: 'row',
@@ -344,8 +194,5 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
     lineHeight: 20,
-  },
-  bottomPadding: {
-    height: 100,
   },
 });
