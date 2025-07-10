@@ -389,10 +389,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     paddingHorizontal: 12,
+    paddingVertical: 10,
     fontSize: 15,
     borderWidth: 1,
     borderColor: '#E5E7EB',
     marginRight: 8,
+    textAlignVertical: 'center',
   },
   sendButton: {
     backgroundColor: '#3B82F6',
