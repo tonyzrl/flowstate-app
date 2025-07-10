@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRef } from 'react';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
 import ProgressBar from '@/components/ProgressBar';
@@ -11,6 +12,11 @@ export default function HomeScreen() {
   const userName = "Jimmy";
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
+
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const HEADER_HEIGHT = 280;
+  const HEADER_MIN_HEIGHT = 100;
+  const HEADER_SCROLL_DISTANCE = HEADER_HEIGHT - HEADER_MIN_HEIGHT;
 
   const focusTasks = [
     { id: 1, title: 'Complete Math Assignment', completed: false },
@@ -30,34 +36,101 @@ export default function HomeScreen() {
     'Try the Pomodoro Technique for better time management',
   ];
 
+  // Animated values for header collapse
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [HEADER_HEIGHT, HEADER_MIN_HEIGHT],
+    extrapolate: 'clamp',
+  });
+
+  const headerOpacity = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+    outputRange: [1, 0.5, 0],
+    extrapolate: 'clamp',
+  });
+
+  const greetingOpacity = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 3],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  const greetingTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2],
+    outputRange: [0, -50],
+    extrapolate: 'clamp',
+  });
+
+  const profileScale = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [1, 0.7],
+    extrapolate: 'clamp',
+  });
+
+  const profileTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [0, -20],
+    extrapolate: 'clamp',
+  });
+
   return (
     <View style={styles.container}>
-      {/* Hero Section with Background Image and Profile */}
-      <View style={styles.heroSection}>
+      {/* Animated Hero Section */}
+      <Animated.View style={[styles.heroSection, { height: headerHeight }]}>
         <Image
           source={{ uri: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800' }}
           style={styles.backgroundImage}
         />
-        <LinearGradient
-          colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.6)']}
-          style={styles.overlay}
-        />
+        <Animated.View style={[styles.overlay, { opacity: headerOpacity }]}>
+          <LinearGradient
+            colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.6)']}
+            style={StyleSheet.absoluteFillObject}
+          />
+        </Animated.View>
+        
         <SafeAreaView style={styles.heroContent}>
-          <View style={styles.profileSection}>
+          <Animated.View 
+            style={[
+              styles.profileSection,
+              {
+                transform: [
+                  { scale: profileScale },
+                  { translateY: profileTranslateY }
+                ]
+              }
+            ]}
+          >
             <Image
               source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150' }}
               style={styles.profileImage}
             />
-          </View>
-          <View style={styles.greetingSection}>
+          </Animated.View>
+          
+          <Animated.View 
+            style={[
+              styles.greetingSection,
+              {
+                opacity: greetingOpacity,
+                transform: [{ translateY: greetingTranslateY }]
+              }
+            ]}
+          >
             <Text style={styles.greeting}>{greeting},</Text>
             <Text style={styles.userName}>{userName}</Text>
-          </View>
+          </Animated.View>
         </SafeAreaView>
-      </View>
+      </Animated.View>
 
-      {/* Content Section */}
-      <ScrollView style={styles.contentSection} showsVerticalScrollIndicator={false}>
+      {/* Content Section with Animated ScrollView */}
+      <Animated.ScrollView
+        style={styles.contentSection}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+      >
         <View style={styles.contentPadding}>
           <Card title="Today's Overview">
             <View style={styles.statsRow}>
@@ -110,8 +183,11 @@ export default function HomeScreen() {
               ))}
             </View>
           </Card>
+
+          {/* Extra padding at bottom for better scrolling experience */}
+          <View style={styles.bottomPadding} />
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 }
@@ -122,8 +198,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
   },
   heroSection: {
-    height: 280,
-    position: 'relative',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    overflow: 'hidden',
   },
   backgroundImage: {
     width: '100%',
@@ -171,10 +251,11 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flex: 1,
-    marginTop: -20,
+    marginTop: 260, // Start below the initial header height
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     backgroundColor: '#F3F4F6',
+    zIndex: 2,
   },
   contentPadding: {
     paddingHorizontal: 16,
@@ -258,5 +339,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
     lineHeight: 20,
+  },
+  bottomPadding: {
+    height: 100,
   },
 });
