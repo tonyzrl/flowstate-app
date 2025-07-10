@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
@@ -30,66 +30,88 @@ export default function HomeScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.greeting}>{greeting}, {userName}!</Text>
-          <Text style={styles.subtitle}>Let's make today productive</Text>
+    <View style={styles.container}>
+      {/* Hero Section */}
+      <View style={styles.heroSection}>
+        <Image
+          source={{ uri: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' }}
+          style={styles.heroBackground}
+          resizeMode="cover"
+        />
+        <View style={styles.heroOverlay} />
+        <SafeAreaView style={styles.heroContent}>
+          <View style={styles.heroHeader}>
+            <View style={styles.greetingContainer}>
+              <Text style={styles.heroGreeting}>{greeting},</Text>
+              <Text style={styles.heroName}>{userName}</Text>
+            </View>
+            <View style={styles.profileContainer}>
+              <Image
+                source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2' }}
+                style={styles.profileImage}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
+
+      {/* Content Section */}
+      <ScrollView style={styles.contentSection} showsVerticalScrollIndicator={false}>
+        <View style={styles.contentPadding}>
+          <Card title="Today's Overview">
+            <View style={styles.statsRow}>
+              <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />
+              <StatCard title="Study Time" value="4.5h" subtitle="Today" color="#3B82F6" />
+              <StatCard title="Focus Score" value="85%" subtitle="↑ 5%" color="#8B5CF6" />
+            </View>
+          </Card>
+
+          <Card title="Focus for Today">
+            <View style={styles.taskList}>
+              {focusTasks.map((task) => (
+                <View key={task.id} style={styles.taskItem}>
+                  <CheckCircle
+                    size={20}
+                    color={task.completed ? '#10B981' : '#D1D5DB'}
+                    fill={task.completed ? '#10B981' : 'transparent'}
+                  />
+                  <Text style={[styles.taskText, task.completed && styles.completedTask]}>
+                    {task.title}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </Card>
+
+          <Card title="Upcoming Events">
+            <View style={styles.eventList}>
+              {upcomingEvents.map((event) => (
+                <View key={event.id} style={styles.eventItem}>
+                  <View style={styles.eventIcon}>
+                    <Clock size={16} color="#6B7280" />
+                  </View>
+                  <View style={styles.eventContent}>
+                    <Text style={styles.eventTitle}>{event.title}</Text>
+                    <Text style={styles.eventDate}>{event.date}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          </Card>
+
+          <Card title="AI Suggestions">
+            <View style={styles.suggestionList}>
+              {suggestions.map((suggestion, index) => (
+                <View key={index} style={styles.suggestionItem}>
+                  <Lightbulb size={16} color="#F59E0B" />
+                  <Text style={styles.suggestionText}>{suggestion}</Text>
+                </View>
+              ))}
+            </View>
+          </Card>
         </View>
-
-        <Card title="Today's Overview">
-          <View style={styles.statsRow}>
-            <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />
-            <StatCard title="Study Time" value="4.5h" subtitle="Today" color="#3B82F6" />
-            <StatCard title="Focus Score" value="85%" subtitle="↑ 5%" color="#8B5CF6" />
-          </View>
-        </Card>
-
-        <Card title="Focus for Today">
-          <View style={styles.taskList}>
-            {focusTasks.map((task) => (
-              <View key={task.id} style={styles.taskItem}>
-                <CheckCircle
-                  size={20}
-                  color={task.completed ? '#10B981' : '#D1D5DB'}
-                  fill={task.completed ? '#10B981' : 'transparent'}
-                />
-                <Text style={[styles.taskText, task.completed && styles.completedTask]}>
-                  {task.title}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </Card>
-
-        <Card title="Upcoming Events">
-          <View style={styles.eventList}>
-            {upcomingEvents.map((event) => (
-              <View key={event.id} style={styles.eventItem}>
-                <View style={styles.eventIcon}>
-                  <Clock size={16} color="#6B7280" />
-                </View>
-                <View style={styles.eventContent}>
-                  <Text style={styles.eventTitle}>{event.title}</Text>
-                  <Text style={styles.eventDate}>{event.date}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </Card>
-
-        <Card title="AI Suggestions">
-          <View style={styles.suggestionList}>
-            {suggestions.map((suggestion, index) => (
-              <View key={index} style={styles.suggestionItem}>
-                <Lightbulb size={16} color="#F59E0B" />
-                <Text style={styles.suggestionText}>{suggestion}</Text>
-              </View>
-            ))}
-          </View>
-        </Card>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -98,23 +120,74 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F4F6',
   },
-  scrollView: {
+  heroSection: {
+    height: 280,
+    position: 'relative',
+  },
+  heroBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+  },
+  heroOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  heroContent: {
     flex: 1,
-    paddingHorizontal: 16,
+    justifyContent: 'flex-end',
+    paddingBottom: 40,
   },
-  header: {
-    paddingVertical: 24,
+  heroHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
   },
-  greeting: {
-    fontSize: 28,
-    fontFamily: 'Poppins-SemiBold',
-    color: '#1F2937',
+  greetingContainer: {
+    flex: 1,
   },
-  subtitle: {
-    fontSize: 16,
+  heroGreeting: {
+    fontSize: 24,
     fontFamily: 'Inter-Regular',
-    color: '#6B7280',
-    marginTop: 4,
+    color: '#FFFFFF',
+    opacity: 0.9,
+    marginBottom: 4,
+  },
+  heroName: {
+    fontSize: 48,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#FFFFFF',
+    lineHeight: 56,
+  },
+  profileContainer: {
+    marginLeft: 20,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: '#FFFFFF',
+  },
+  contentSection: {
+    flex: 1,
+    backgroundColor: '#F3F4F6',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    marginTop: -24,
+  },
+  contentPadding: {
+    paddingHorizontal: 16,
+    paddingTop: 24,
   },
   statsRow: {
     flexDirection: 'row',
