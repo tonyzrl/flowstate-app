@@ -98,7 +98,7 @@ export default function ChatScreen() {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.textInput}
-                placeholder="Ask me anything about studying..."
+                placeholder="Ask me anything..."
                 value={message}
                 onChangeText={setMessage}
                 multiline
