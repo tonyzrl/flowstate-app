@@ -12,12 +12,18 @@ export default function ChatScreen() {
     { id: 3, text: 'I understand. Based on your study patterns, I suggest using the Pomodoro Technique. Would you like me to create a personalized schedule for you?', sender: 'ai' },
   ]);
 
+  const [search, setSearch] = useState(''); // <-- Added for search bar
+
   const contacts = [
     { id: 1, name: 'Sarah Chen', role: 'Study Partner', status: 'online', type: 'student' },
     { id: 2, name: 'Ray Johnson', role: 'UNIT2001 Tutor', status: 'offline', type: 'tutor' },
     { id: 3, name: 'Dr. Mike Rodriguez', role: 'Course Coordinator', status: 'online', type: 'teacher' },
     { id: 4, name: 'UNIT2001 Study Group', role: '21 members', status: 'active', type: 'group' },
   ];
+
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(search.toLowerCase())
+  ); // <-- Filter contacts by search
 
   const suggestedContacts = [
     { id: 1, name: 'Assc. Prof. Emma Wilson', role: 'UNIT3034 Lecturer', type: 'staff' },
@@ -95,8 +101,22 @@ export default function ChatScreen() {
         </Card>
 
         <Card title="Your Contacts">
+          {/* Search Bar for Contacts */}
+          <TextInput
+            placeholder="Search contacts..."
+            value={search}
+            onChangeText={setSearch}
+            style={{
+              height: 40,
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderRadius: 8,
+              paddingHorizontal: 10,
+              marginBottom: 12,
+            }}
+          />
           <View style={styles.contactsList}>
-            {contacts.map((contact) => (
+            {filteredContacts.map((contact) => (
               <TouchableOpacity key={contact.id} style={styles.contactItem}>
                 <View style={styles.contactIcon}>
                   {contact.type === 'student' && <User size={20} color="#3B82F6" />}
@@ -205,64 +225,65 @@ const styles = StyleSheet.create({
   },
   messageText: {
     flex: 1,
-    padding: 12,
+    fontSize: 15,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     borderRadius: 12,
-    fontSize: 14,
-    fontFamily: 'Inter-Regular',
-    lineHeight: 20,
+    maxWidth: '80%',
   },
   userMessageText: {
-    backgroundColor: '#3B82F6',
-    color: '#FFFFFF',
-    marginLeft: 32,
+    backgroundColor: '#E0E7FF',
+    color: '#3730A3',
+    textAlign: 'right',
   },
   aiMessageText: {
     backgroundColor: '#F3F4F6',
-    color: '#374151',
-    marginRight: 32,
+    color: '#1F2937',
+    textAlign: 'left',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    backgroundColor: '#F9FAFB',
-    borderRadius: 12,
-    paddingHorizontal: 12,
     paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
   },
   textInput: {
     flex: 1,
-    fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    color: '#374151',
-    maxHeight: 100,
-    paddingVertical: 8,
+    minHeight: 40,
+    maxHeight: 80,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    fontSize: 15,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginRight: 8,
   },
   sendButton: {
     backgroundColor: '#3B82F6',
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    alignItems: 'center',
+    borderRadius: 8,
+    padding: 10,
     justifyContent: 'center',
-    marginLeft: 8,
+    alignItems: 'center',
   },
   contactsList: {
-    marginTop: 8,
+    marginTop: 4,
   },
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: '#E5E7EB',
   },
   contactIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F3F4F6',
-    alignItems: 'center',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#EFF6FF',
     justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 12,
   },
   contactInfo: {
@@ -270,82 +291,75 @@ const styles = StyleSheet.create({
   },
   contactName: {
     fontSize: 16,
-    fontFamily: 'Inter-Medium',
-    color: '#374151',
+    fontFamily: 'Poppins-Medium',
+    color: '#1F2937',
   },
   contactRole: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'Inter-Regular',
     color: '#6B7280',
-    marginTop: 2,
   },
   statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginLeft: 8,
   },
   suggestedList: {
-    marginTop: 8,
+    marginTop: 4,
   },
   suggestedItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: '#E5E7EB',
   },
   suggestedIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#F3F4F6',
-    alignItems: 'center',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#F0FDF4',
     justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 12,
   },
   suggestedInfo: {
     flex: 1,
   },
   suggestedName: {
-    fontSize: 14,
-    fontFamily: 'Inter-Medium',
-    color: '#374151',
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    color: '#1F2937',
   },
   suggestedRole: {
     fontSize: 12,
     fontFamily: 'Inter-Regular',
     color: '#6B7280',
-    marginTop: 2,
   },
   connectButton: {
     backgroundColor: '#3B82F6',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 16,
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
   },
   connectButtonText: {
-    fontSize: 12,
+    color: '#fff',
+    fontSize: 13,
     fontFamily: 'Inter-Medium',
-    color: '#FFFFFF',
   },
   suggestionList: {
-    marginTop: 8,
+    marginTop: 4,
   },
   suggestionItem: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#FEF3C7',
-    borderRadius: 8,
-    marginBottom: 8,
   },
   suggestionText: {
-    fontSize: 14,
-    fontFamily: 'Inter-Regular',
-    color: '#92400E',
     marginLeft: 8,
-    flex: 1,
-    lineHeight: 20,
+    fontSize: 14,
+    color: '#F59E0B',
+    fontFamily: 'Inter-Medium',
   },
 });
