@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import Card from '@/components/Card';
-import { Send, Bot, User, Users, GraduationCap, Lightbulb } from 'lucide-react-native';
+import { Send, Bot, User, Users, GraduationCap, Lightbulb, Plus, X } from 'lucide-react-native';
 
 export default function ChatScreen() {
   const [message, setMessage] = useState('');
@@ -13,14 +13,20 @@ export default function ChatScreen() {
   ]);
 
   const [search, setSearch] = useState('');
-  const [selectedType, setSelectedType] = useState<string | null>(null); // <-- NEW
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newContact, setNewContact] = useState({
+    name: '',
+    role: '',
+    type: 'student'
+  });
 
-  const contacts = [
+  const [contacts, setContacts] = useState([
     { id: 1, name: 'Sarah Chen', role: 'Study Partner', status: 'online', type: 'student' },
     { id: 2, name: 'Ray Johnson', role: 'UNIT2001 Tutor', status: 'offline', type: 'tutor' },
     { id: 3, name: 'Dr. Mike Rodriguez', role: 'Course Coordinator', status: 'online', type: 'teacher' },
     { id: 4, name: 'UNIT2001 Study Group', role: '21 members', status: 'active', type: 'group' },
-  ];
+  ]);
 
   const contactTypes = [
     { label: 'All', value: null },
@@ -60,6 +66,24 @@ export default function ChatScreen() {
           sender: 'ai' 
         }]);
       }, 1000);
+    }
+  };
+
+  const addContact = () => {
+    if (newContact.name.trim() && newContact.role.trim()) {
+      // Add the new contact to the contacts array
+      const contact = {
+        id: contacts.length + 1,
+        name: newContact.name,
+        role: newContact.role,
+        status: 'offline',
+        type: newContact.type
+      };
+      setContacts([...contacts, contact]);
+      
+      // Reset form and close modal
+      setNewContact({ name: '', role: '', type: 'student' });
+      setShowAddModal(false);
     }
   };
 
@@ -111,20 +135,29 @@ export default function ChatScreen() {
         </Card>
 
         <Card title="Your Contacts">
-          {/* Search Bar */}
-          <TextInput
-            placeholder="Search contacts..."
-            value={search}
-            onChangeText={setSearch}
-            style={{
-              height: 40,
-              borderColor: '#ccc',
-              borderWidth: 1,
-              borderRadius: 8,
-              paddingHorizontal: 10,
-              marginBottom: 12,
-            }}
-          />
+          {/* Header with Add Button */}
+          <View style={styles.contactsHeader}>
+            <TextInput
+              placeholder="Search contacts..."
+              value={search}
+              onChangeText={setSearch}
+              style={{
+                flex: 1,
+                height: 40,
+                borderColor: '#ccc',
+                borderWidth: 1,
+                borderRadius: 8,
+                paddingHorizontal: 10,
+                marginRight: 12,
+              }}
+            />
+            <TouchableOpacity 
+              style={styles.addContactButton}
+              onPress={() => setShowAddModal(true)}
+            >
+              <Plus size={20} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
           {/* Filter Buttons */}
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
             {contactTypes.map(type => (
@@ -203,6 +236,73 @@ export default function ChatScreen() {
           </View>
         </Card>
       </ScrollView>
+
+      {/* Add Contact Modal */}
+      <Modal
+        visible={showAddModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowAddModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Add New Contact</Text>
+              <TouchableOpacity onPress={() => setShowAddModal(false)}>
+                <X size={24} color="#6B7280" />
+              </TouchableOpacity>
+            </View>
+            
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Name"
+              value={newContact.name}
+              onChangeText={(text) => setNewContact({...newContact, name: text})}
+            />
+            
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Role"
+              value={newContact.role}
+              onChangeText={(text) => setNewContact({...newContact, role: text})}
+            />
+            
+            <Text style={styles.modalLabel}>Icon Type:</Text>
+            <View style={styles.iconTypeContainer}>
+              {[
+                { type: 'student', icon: <User size={20} color="#3B82F6" />, label: 'Student' },
+                { type: 'teacher', icon: <GraduationCap size={20} color="#10B981" />, label: 'Teacher' },
+                { type: 'tutor', icon: <GraduationCap size={20} color="#F59E0B" />, label: 'Tutor' },
+                { type: 'group', icon: <Users size={20} color="#8B5CF6" />, label: 'Group' },
+              ].map((item) => (
+                <TouchableOpacity
+                  key={item.type}
+                  style={[
+                    styles.iconTypeButton,
+                    newContact.type === item.type && styles.selectedIconType
+                  ]}
+                  onPress={() => setNewContact({...newContact, type: item.type})}
+                >
+                  {item.icon}
+                  <Text style={[
+                    styles.iconTypeLabel,
+                    newContact.type === item.type && styles.selectedIconTypeLabel
+                  ]}>
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.addButton}
+              onPress={addContact}
+            >
+              <Text style={styles.addButtonText}>Add Contact</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -394,6 +494,97 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 14,
     color: '#F59E0B',
+    fontFamily: 'Inter-Medium',
+  },
+  contactsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  addContactButton: {
+    backgroundColor: '#3B82F6',
+    borderRadius: 8,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#1F2937',
+  },
+  modalInput: {
+    height: 48,
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    fontSize: 16,
+  },
+  modalLabel: {
+    fontSize: 16,
+    fontFamily: 'Inter-Medium',
+    color: '#374151',
+    marginBottom: 12,
+  },
+  iconTypeContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
+  iconTypeButton: {
+    width: '48%',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginBottom: 8,
+  },
+  selectedIconType: {
+    backgroundColor: '#EBF8FF',
+    borderColor: '#3B82F6',
+  },
+  iconTypeLabel: {
+    fontSize: 12,
+    fontFamily: 'Inter-Medium',
+    color: '#6B7280',
+    marginTop: 4,
+  },
+  selectedIconTypeLabel: {
+    color: '#3B82F6',
+  },
+  addButton: {
+    backgroundColor: '#3B82F6',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
     fontFamily: 'Inter-Medium',
   },
 });
