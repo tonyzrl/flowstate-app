@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import Card from '@/components/Card';
 import { Send, Bot, User, Users, GraduationCap, Lightbulb, Plus, X } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 export default function ChatScreen() {
   const [message, setMessage] = useState('');
@@ -85,6 +86,10 @@ export default function ChatScreen() {
       setNewContact({ name: '', role: '', type: 'student' });
       setShowAddModal(false);
     }
+  };
+
+  const navigateToTeacherView = () => {
+    router.push('/teacher-view' as any);
   };
 
   return (
@@ -234,6 +239,12 @@ export default function ChatScreen() {
               </TouchableOpacity>
             ))}
           </View>
+        </Card>
+
+        <Card title="View Options">
+          <TouchableOpacity style={styles.swapButton} onPress={navigateToTeacherView}>
+            <Text style={styles.swapButtonText}>Swap to Teacher View</Text>
+          </TouchableOpacity>
         </Card>
       </ScrollView>
 
@@ -585,6 +596,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'Inter-Medium',
+  },
+  swapButton: {
+    backgroundColor: '#10B981',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  swapButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontFamily: 'Inter-Medium',
