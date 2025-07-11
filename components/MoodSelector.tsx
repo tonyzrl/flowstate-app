@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { useMascot } from '@/contexts/MascotContext';
 
 const moods = [
   { id: 1, emoji: '😊', label: 'Great', color: '#10B981' },
@@ -11,6 +12,7 @@ const moods = [
 
 export default function MoodSelector() {
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const { setMoodFromUserMood } = useMascot();
 
   return (
     <View style={styles.container}>
@@ -23,7 +25,10 @@ export default function MoodSelector() {
               styles.moodButton,
               selectedMood === mood.id && { backgroundColor: mood.color, opacity: 0.2 }
             ]}
-            onPress={() => setSelectedMood(mood.id)}
+            onPress={() => {
+              setSelectedMood(mood.id);
+              setMoodFromUserMood(mood.id);
+            }}
           >
             <Text style={styles.moodEmoji}>{mood.emoji}</Text>
             <Text style={styles.moodLabel}>{mood.label}</Text>

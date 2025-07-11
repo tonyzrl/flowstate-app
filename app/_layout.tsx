@@ -6,6 +6,8 @@ import { useFonts } from 'expo-font';
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import * as SplashScreen from 'expo-splash-screen';
+import { MascotProvider, useMascot } from '@/contexts/MascotContext';
+import MascotDisplay from '@/components/MascotDisplay';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,13 +35,24 @@ export default function RootLayout() {
   }
 
   return (
+    <MascotProvider>
+      <AppContent />
+      <StatusBar style="auto" />
+    </MascotProvider>
+  );
+}
+
+function AppContent() {
+  const { mascot, mood } = useMascot();
+
+  return (
     <>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="wellbeing-report" />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <MascotDisplay mascot={mascot} mood={mood} />
     </>
   );
 }
