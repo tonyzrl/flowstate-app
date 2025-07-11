@@ -7,7 +7,7 @@ import { CircleCheck as CheckCircle, Clock, Target, Lightbulb, Users, Graduation
 import { router } from 'expo-router';
 
 export default function TeacherViewScreen() {
-  const teacherName = "Dr. Sarah Chen";
+  const teacherName = "Eric";
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
 
@@ -87,7 +87,7 @@ export default function TeacherViewScreen() {
             </View>
             <TouchableOpacity onPress={() => setShowStatsModal(true)} style={styles.profileContainer}>
               <Image
-                source={{ uri: 'https://images.pexels.com/photos/3777943/pexels-photo-3777943.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2' }}
+                source={require('@/assets/images/eric.png')}
                 style={styles.profileImage}
               />
             </TouchableOpacity>
@@ -289,12 +289,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   heroGreeting: {
-    fontSize: 18,
+    fontSize: 24,
     color: '#FFFFFF',
     fontFamily: 'Inter-Regular',
   },
   heroName: {
-    fontSize: 28,
+    fontSize: 48,
     color: '#FFFFFF',
     fontFamily: 'Poppins-SemiBold',
   },
@@ -305,9 +305,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   profileContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     overflow: 'hidden',
     borderWidth: 3,
     borderColor: '#FFFFFF',
