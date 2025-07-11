@@ -260,12 +260,12 @@ export default function ChatScreen() {
                       <FormattedText text={msg.text} />
                     </View>
                   ) : (
-                    <Text style={[
-                      styles.messageText,
+                  <Text style={[
+                    styles.messageText,
                       styles.userMessageText
-                    ]}>
-                      {msg.text}
-                    </Text>
+                  ]}>
+                    {msg.text}
+                  </Text>
                   )}
                 </View>
               ))}
@@ -414,17 +414,17 @@ export default function ChatScreen() {
         <Card title="Your Contacts">
           {/* Header with Add Button */}
           <View style={styles.contactsHeader}>
-            <TextInput
-              placeholder="Search contacts..."
-              value={search}
-              onChangeText={setSearch}
-              style={{
+          <TextInput
+            placeholder="Search contacts..."
+            value={search}
+            onChangeText={setSearch}
+            style={{
                 flex: 1,
-                height: 40,
-                borderColor: '#ccc',
-                borderWidth: 1,
-                borderRadius: 8,
-                paddingHorizontal: 10,
+              height: 40,
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderRadius: 8,
+              paddingHorizontal: 10,
                 marginRight: 12,
               }}
             />
