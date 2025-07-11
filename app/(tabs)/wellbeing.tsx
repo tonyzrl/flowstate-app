@@ -4,13 +4,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
-import { Heart, Headphones, Play, Lightbulb, AlertCircle } from 'lucide-react-native';
+import MascotPopup from '@/components/MascotPopup';
+import { Heart, Headphones, Play, Lightbulb, AlertCircle, Settings } from 'lucide-react-native';
+import { useMascot } from '@/contexts/MascotContext';
 
 export default function WellbeingScreen() {
   const [show360, setShow360] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
   const [showSounds, setShowSounds] = useState(false);
   const [showMeditation, setShowMeditation] = useState(false);
+  const [showMascotPopup, setShowMascotPopup] = useState(false);
+  const { mascot, setMascot } = useMascot();
   const recentMoods = [
     { day: 'Mon', mood: '😊', score: 85 },
     { day: 'Tue', mood: '🙂', score: 75 },
@@ -44,6 +48,15 @@ export default function WellbeingScreen() {
 
         <Card title="How's Your Mood?">
           <MoodSelector />
+          <View style={styles.mascotSection}>
+            <TouchableOpacity
+              style={styles.mascotButton}
+              onPress={() => setShowMascotPopup(true)}
+            >
+              <Settings size={20} color="#6B7280" />
+              <Text style={styles.mascotButtonText}>Choose Companion</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
 
         <Card title="Report Wellbeing to Teacher">
@@ -243,6 +256,13 @@ export default function WellbeingScreen() {
           </View>
         </Card>
       </ScrollView>
+      
+      <MascotPopup
+        visible={showMascotPopup}
+        onClose={() => setShowMascotPopup(false)}
+        onMascotChange={setMascot}
+        selectedMascot={mascot}
+      />
     </SafeAreaView>
   );
 }
@@ -384,5 +404,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Inter-SemiBold',
     color: '#FFFFFF',
+  },
+  mascotSection: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+  },
+  mascotButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+  },
+  mascotButtonText: {
+    fontSize: 14,
+    fontFamily: 'Inter-Medium',
+    color: '#6B7280',
+    marginLeft: 8,
   },
 });
