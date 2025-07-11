@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
-import { Heart, Headphones, Play, Lightbulb } from 'lucide-react-native';
+import { Heart, Headphones, Play, Lightbulb, AlertCircle } from 'lucide-react-native';
 
 export default function WellbeingScreen() {
   const [show360, setShow360] = useState(false);
@@ -43,6 +44,23 @@ export default function WellbeingScreen() {
 
         <Card title="How's Your Mood?">
           <MoodSelector />
+        </Card>
+
+        <Card title="Report Wellbeing to Teacher">
+          <View style={styles.reportSection}>
+            <View style={styles.reportInfo}>
+              <AlertCircle size={20} color="#8B5CF6" />
+              <Text style={styles.reportText}>
+                Need to talk to your teacher about your wellbeing? Send them a detailed report.
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.reportButton}
+              onPress={() => router.push('/wellbeing-report')}
+            >
+              <Text style={styles.reportButtonText}>Report Wellbeing</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
 
         <Card title="Recent Moods">
@@ -338,5 +356,33 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
     lineHeight: 20,
+  },
+  reportSection: {
+    marginTop: 8,
+  },
+  reportInfo: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 16,
+  },
+  reportText: {
+    fontSize: 14,
+    fontFamily: 'Inter-Regular',
+    color: '#6B7280',
+    marginLeft: 12,
+    flex: 1,
+    lineHeight: 20,
+  },
+  reportButton: {
+    backgroundColor: '#8B5CF6',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+  reportButtonText: {
+    fontSize: 16,
+    fontFamily: 'Inter-SemiBold',
+    color: '#FFFFFF',
   },
 });
