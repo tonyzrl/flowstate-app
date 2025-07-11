@@ -15,7 +15,7 @@ export default function TeacherWellbeingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F4FAFA',
   },
   content: {
     flex: 1,

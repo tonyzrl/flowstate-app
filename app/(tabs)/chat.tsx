@@ -477,6 +477,9 @@ export default function ChatScreen() {
                   if (contact.name === 'UNIT2001 Study Group') {
                     router.push('/unit2001-group');
                   }
+                  if (contact.name === 'Dr. Mike Rodriguez') {
+                    router.push('/unit-coordinator-chat');
+                  }
                 }}
               >
                 <View style={styles.contactIcon}>
@@ -712,7 +715,7 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F4FAFA',
   },
   scrollView: {
     flex: 1,

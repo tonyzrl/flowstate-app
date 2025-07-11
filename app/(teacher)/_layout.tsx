@@ -9,7 +9,7 @@ export default function TeacherTabLayout() {
         tabBarActiveTintColor: '#3B82F6',
         tabBarInactiveTintColor: '#6B7280',
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#F4FAFA',
           borderTopWidth: 1,
           borderTopColor: '#E5E7EB',
           height: 60,
@@ -69,4 +69,4 @@ export default function TeacherTabLayout() {
       />
     </Tabs>
   );
-} 
+}

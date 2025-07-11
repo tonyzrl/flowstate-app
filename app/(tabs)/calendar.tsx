@@ -190,6 +190,30 @@ export default function CalendarScreen() {
           </View>
         </Card>
 
+        {/* AI Recommendations Section */}
+        <Card title="AI Recommendations">
+          <View style={styles.aiRecommendationsList}>
+            <View style={styles.aiRecommendationItem}>
+              <Lightbulb size={16} color="#3B82F6" />
+              <Text style={styles.aiRecommendationText}>
+                You might not be able to play sport this week due to your UNIT2001 commitments. Consider rescheduling or planning a lighter training session.
+              </Text>
+            </View>
+            <View style={styles.aiRecommendationItem}>
+              <Lightbulb size={16} color="#10B981" />
+              <Text style={styles.aiRecommendationText}>
+                Remember to schedule some relaxation time after your exam—self-care helps you recharge and perform your best!
+              </Text>
+            </View>
+            <View style={styles.aiRecommendationItem}>
+              <Lightbulb size={16} color="#F59E0B" />
+              <Text style={styles.aiRecommendationText}>
+                Balancing study and hobbies is important. Try to keep some time for yourself, even during busy weeks.
+              </Text>
+            </View>
+          </View>
+        </Card>
+
         <Card title="Upcoming Deadlines">
           <View style={styles.deadlinesList}>
             <View style={styles.deadlineItem}>
@@ -234,7 +258,7 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F4FAFA',
   },
   scrollView: {
     flex: 1,
@@ -420,5 +444,20 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
     lineHeight: 20,
+  },
+  aiRecommendationsList: {
+    marginTop: 8,
+  },
+  aiRecommendationItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  aiRecommendationText: {
+    marginLeft: 8,
+    fontSize: 15,
+    color: '#374151',
+    fontFamily: 'Inter-Regular',
+    flex: 1,
   },
 });

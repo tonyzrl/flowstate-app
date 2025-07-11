@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { User, Send, ArrowLeft } from 'lucide-react-native';
+import { User, Send, Video } from 'lucide-react-native';
 import { router } from 'expo-router';
 
-export default function Unit2001GroupScreen() {
+export default function UnitCoordinatorChat() {
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'Alice', text: 'Hey everyone! Anyone else struggling with the last assignment?' },
-    { id: 2, sender: 'Bob', text: 'Yes! The time management part is tough for me.' },
-    { id: 3, sender: 'Charlie', text: 'Let’s share tips and help each other out!' },
+    { id: 1, sender: 'Dr. Mike Rodriguez', text: 'Hi! Let me know if you have any questions about the unit or assessments.' },
+    { id: 2, sender: 'You', text: 'Thank you, Dr. Rodriguez! I wanted to ask about the last assignment.' },
   ]);
   const [input, setInput] = useState('');
+  const [showPopup, setShowPopup] = useState(true);
 
   const sendMessage = () => {
     if (input.trim()) {
@@ -25,11 +25,19 @@ export default function Unit2001GroupScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <ArrowLeft size={20} color="#3B82F6" />
-        <Text style={styles.backButtonText}>Back to Chat</Text>
+        <Text style={styles.backButtonText}>{'< Back to Chat'}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>UNIT2001 Study Group Board</Text>
-      <Text style={styles.subtitle}>Collaborate with your peers on study issues and tips</Text>
+      {showPopup && (
+        <View style={styles.popup}>
+          <Video size={18} color="#3B82F6" />
+          <Text style={styles.popupText}>You have new video feedback</Text>
+          <TouchableOpacity onPress={() => setShowPopup(false)} style={styles.popupClose}>
+            <Text style={styles.popupCloseText}>×</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <Text style={styles.title}>Chat with Dr. Mike Rodriguez</Text>
+      <Text style={styles.subtitle}>Unit Coordinator</Text>
       <View style={styles.boardContainer}>
         <ScrollView style={styles.messagesContainer} showsVerticalScrollIndicator={false}>
           {messages.map(msg => (
@@ -62,34 +70,59 @@ export default function Unit2001GroupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4FAFA',
+    backgroundColor: '#F3F4F6',
     paddingHorizontal: 16,
     paddingTop: 24,
   },
   backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
     alignSelf: 'flex-start',
+    marginBottom: 8,
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
   backButtonText: {
     color: '#3B82F6',
     fontSize: 16,
-    marginLeft: 4,
     fontFamily: 'Inter-Medium',
+  },
+  popup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E0E7FF',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    alignSelf: 'center',
+    marginTop: 4,
+  },
+  popupText: {
+    color: '#3B82F6',
+    fontSize: 15,
+    marginLeft: 8,
+    fontFamily: 'Inter-Medium',
+  },
+  popupClose: {
+    marginLeft: 12,
+    padding: 4,
+  },
+  popupCloseText: {
+    fontSize: 18,
+    color: '#6B7280',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 22,
     fontFamily: 'Poppins-SemiBold',
     color: '#1F2937',
-    marginBottom: 4,
+    marginBottom: 2,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 15,
     color: '#6B7280',
     marginBottom: 16,
+    textAlign: 'center',
   },
   boardContainer: {
     flex: 1,
