@@ -38,6 +38,16 @@ export default function HomeScreen() {
     'Try the Pomodoro Technique for better time management',
   ];
 
+  const dailyQuotes = [
+    "You are capable of amazing things.",
+    "Every day is a fresh start.",
+    "Believe in yourself and all that you are.",
+    "Progress, not perfection.",
+    "You’ve got this!",
+  ];
+  const today = new Date();
+  const quoteOfTheDay = dailyQuotes[today.getDate() % dailyQuotes.length];
+
   return (
     <View style={styles.container}>
       {/* Hero Section */}
@@ -67,6 +77,14 @@ export default function HomeScreen() {
       {/* Content Section */}
       <ScrollView style={styles.contentSection} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
+          {/* Daily Affirmation Card */}
+          <Card title="Daily Affirmation">
+            <View style={{ paddingVertical: 6, alignItems: 'center' }}> {/* Reduced from 16 to 6 */}
+              <Text style={{ fontSize: 18, fontStyle: 'italic', color: '#6B7280', textAlign: 'center' }}>
+                "{quoteOfTheDay}"
+              </Text>
+            </View>
+          </Card>
           <Card title="Today's Overview">
             <View style={styles.statsRow}>
               <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />
