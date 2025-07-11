@@ -108,7 +108,7 @@ export default function HomeScreen() {
               paddingVertical: 12,
               paddingHorizontal: 20,
               marginBottom: 16,
-              marginTop: 12,
+              marginTop: 0, // or remove this line entirely
               alignSelf: 'center',
               flexDirection: 'row',
               alignItems: 'center',
@@ -124,13 +124,11 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
           {/* Daily Affirmation Card */}
-          <Card title="Daily Affirmation">
-            <View style={{ paddingVertical: 6, alignItems: 'center' }}> {/* Reduced from 16 to 6 */}
-              <Text style={{ fontSize: 18, fontStyle: 'italic', color: '#6B7280', textAlign: 'center' }}>
-                "{quoteOfTheDay}"
-              </Text>
-            </View>
-          </Card>
+          <View style={{ paddingVertical: 6, alignItems: 'center', marginBottom: 16 }}>
+            <Text style={{ fontSize: 24, fontStyle: 'italic', color: '#6B7280', textAlign: 'center' }}>
+              "{quoteOfTheDay}"
+            </Text>
+          </View>
           <Card title="Today's Overview">
             <View style={styles.statsRow}>
               <StatCard title="Mood" value="😊" subtitle="Great" color="#10B981" />

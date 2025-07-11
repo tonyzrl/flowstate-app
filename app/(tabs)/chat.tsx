@@ -461,7 +461,15 @@ export default function ChatScreen() {
           {/* Contacts List */}
           <View style={styles.contactsList}>
             {filteredContacts.map((contact) => (
-              <TouchableOpacity key={contact.id} style={styles.contactItem}>
+              <TouchableOpacity 
+                key={contact.id} 
+                style={styles.contactItem}
+                onPress={() => {
+                  if (contact.name === 'UNIT2001 Study Group') {
+                    router.push('/unit2001-group');
+                  }
+                }}
+              >
                 <View style={styles.contactIcon}>
                   {contact.type === 'student' && <User size={20} color="#3B82F6" />}
                   {contact.type === 'teacher' && <GraduationCap size={20} color="#10B981" />}
