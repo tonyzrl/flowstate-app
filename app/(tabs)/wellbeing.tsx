@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import Card from '@/components/Card';
 import MoodSelector from '@/components/MoodSelector';
 import MascotPopup from '@/components/MascotPopup';
-import { Heart, Headphones, Play, Lightbulb, AlertCircle, Settings } from 'lucide-react-native';
+import { Heart, Headphones, Play, Lightbulb, CircleAlert as AlertCircle, Settings } from 'lucide-react-native';
 import { useMascot } from '@/contexts/MascotContext';
 
 export default function WellbeingScreen() {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Send, Calendar, FileText, AlertCircle, Sparkles, CheckCircle } from 'lucide-react-native';
+import { ArrowLeft, Send, Calendar, FileText, CircleAlert as AlertCircle, Sparkles, CircleCheck as CheckCircle } from 'lucide-react-native';
 
 export default function WellbeingReportScreen() {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
