@@ -182,32 +182,13 @@ export default function HomeScreen() {
             padding: 24,
             width: '90%',
             maxHeight: '80%',
+            alignItems: 'center',
           }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 18, textAlign: 'center' }}>
-              Your Monthly Wrapped
-            </Text>
-            {/* Wellbeing Section */}
-            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Wellbeing</Text>
-            <View style={{ marginBottom: 16 }}>
-              <Text>Mood: {wellbeingStats.mood}</Text>
-              <Text>Avg Sleep: {wellbeingStats.avgSleep}</Text>
-              <Text>Exercise: {wellbeingStats.exercise}</Text>
-            </View>
-            {/* Study Section */}
-            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Study</Text>
-            <View style={{ marginBottom: 16 }}>
-              <Text>Total Study Hours: {studyStats.totalHours}</Text>
-              <Text>Avg Daily: {studyStats.avgDaily}</Text>
-              <Text>Top Subject: {studyStats.topSubject}</Text>
-              <Text>Focus Score: {studyStats.focusScore}</Text>
-            </View>
-            {/* Schedules Section */}
-            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Schedules</Text>
-            <View style={{ marginBottom: 16 }}>
-              {scheduleStats.map((item, idx) => (
-                <Text key={idx}>{item.title} — {item.date}</Text>
-              ))}
-            </View>
+            <Image
+              source={require('@/assets/images/wrapped.png')} 
+              style={{ width: 250, height: 250, borderRadius: 12, marginBottom: 16 }}
+              resizeMode="contain"
+            />
             <TouchableOpacity
               onPress={() => setShowWrappedModal(false)}
               style={{
@@ -215,9 +196,11 @@ export default function HomeScreen() {
                 borderRadius: 8,
                 paddingVertical: 10,
                 alignItems: 'center',
+                width: 120,
+                alignSelf: 'center',
               }}
             >
-              <Text style={{ color: '#fff', fontSize: 16 }}>Close</Text>
+              <Text style={{ color: '#fff', fontSize: 16, textAlign: 'center' }}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
