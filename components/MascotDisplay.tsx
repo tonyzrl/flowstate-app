@@ -53,12 +53,13 @@ export default function MascotDisplay({ mascot, mood }: MascotDisplayProps) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 80, // Position above the tab bar
+    bottom: 60, // Moved down by 20 pixels
     right: 20,
     zIndex: 1000,
   },
   mascotImage: {
     width: 80,
     height: 80,
+    opacity: 0.65, // Even more see-through
   },
 }); 
