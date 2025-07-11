@@ -98,14 +98,12 @@ export default function TeacherViewScreen() {
       {/* Content Section */}
       <ScrollView style={styles.contentSection} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
-          {/* Daily Affirmation Card */}
-          <Card title="Daily Inspiration">
-            <View style={{ paddingVertical: 6, alignItems: 'center' }}>
-              <Text style={{ fontSize: 18, fontStyle: 'italic', color: '#6B7280', textAlign: 'center' }}>
-                "{quoteOfTheDay}"
-              </Text>
-            </View>
-          </Card>
+          {/* Daily Inspiration Card */}
+          <View style={{ paddingVertical: 6, alignItems: 'center', marginBottom: 16 }}>
+            <Text style={{ fontSize: 24, fontStyle: 'italic', color: '#6B7280', textAlign: 'center' }}>
+              "{quoteOfTheDay}"
+            </Text>
+          </View>
 
           <Card title="Teaching Overview">
             <View style={styles.statsRow}>
@@ -149,6 +147,27 @@ export default function TeacherViewScreen() {
                   </View>
                 </View>
               ))}
+            </View>
+          </Card>
+
+          {/* At Risk Students Section */}
+          <Card title="At Risk Students">
+            <View style={{ marginTop: 8 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#DC2626', marginRight: 8 }}>•</Text>
+                <Text style={{ fontSize: 15, color: '#1F2937', flex: 1 }}>Andrei Smith</Text>
+                <Text style={{ fontSize: 13, color: '#DC2626' }}>Low Attendance</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#DC2626', marginRight: 8 }}>•</Text>
+                <Text style={{ fontSize: 15, color: '#1F2937', flex: 1 }}>Emma Wilson</Text>
+                <Text style={{ fontSize: 13, color: '#DC2626' }}>Failing Grades</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#DC2626', marginRight: 8 }}>•</Text>
+                <Text style={{ fontSize: 15, color: '#1F2937', flex: 1 }}>Jason Lee</Text>
+                <Text style={{ fontSize: 13, color: '#DC2626' }}>No Recent Submissions</Text>
+              </View>
             </View>
           </Card>
 
