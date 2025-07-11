@@ -6,6 +6,7 @@ import MoodSelector from '@/components/MoodSelector';
 import ProgressBar from '@/components/ProgressBar';
 import StatCard from '@/components/StatCard';
 import { CircleCheck as CheckCircle, Clock, Target, Lightbulb } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
   const userName = "Andrei";
@@ -48,7 +49,7 @@ export default function HomeScreen() {
   const today = new Date();
   const quoteOfTheDay = dailyQuotes[today.getDate() % dailyQuotes.length];
 
-  const [showWrappedModal, setShowWrappedModal] = useState(false);
+  const router = useRouter();
 
   const wellbeingStats = {
     mood: "😊 Great",
@@ -85,12 +86,12 @@ export default function HomeScreen() {
               <Text style={styles.heroGreeting}>{greeting},</Text>
               <Text style={styles.heroName}>{userName}</Text>
             </View>
-            <TouchableOpacity onPress={() => setShowWrappedModal(true)} style={styles.profileContainer}>
+            <View style={styles.profileContainer}>
               <Image
-                source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2' }}
+                source={require('@/assets/images/andre.png')}
                 style={styles.profileImage}
               />
-            </TouchableOpacity>
+            </View>
           </View>
         </SafeAreaView>
       </View>
@@ -98,6 +99,30 @@ export default function HomeScreen() {
       {/* Content Section */}
       <ScrollView style={styles.contentSection} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
+          {/* Notification Prompt */}
+          <TouchableOpacity
+            onPress={() => router.push('/wrapped')}
+            style={{
+              backgroundColor: '#FDE68A',
+              borderRadius: 12,
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              marginBottom: 16,
+              marginTop: 12,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOpacity: 0.08,
+              shadowRadius: 4,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 2,
+            }}
+          >
+            <Text style={{ color: '#92400E', fontWeight: 'bold', fontSize: 16 }}>
+              📊 View your monthly wrapped now
+            </Text>
+          </TouchableOpacity>
           {/* Daily Affirmation Card */}
           <Card title="Daily Affirmation">
             <View style={{ paddingVertical: 6, alignItems: 'center' }}> {/* Reduced from 16 to 6 */}
@@ -163,48 +188,6 @@ export default function HomeScreen() {
           </Card>
         </View>
       </ScrollView>
-
-      <Modal
-        visible={showWrappedModal}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowWrappedModal(false)}
-      >
-        <View style={{
-          flex: 1,
-          backgroundColor: 'rgba(0,0,0,0.3)',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <View style={{
-            backgroundColor: '#fff',
-            borderRadius: 16,
-            padding: 24,
-            width: '90%',
-            maxHeight: '80%',
-            alignItems: 'center',
-          }}>
-            <Image
-              source={require('@/assets/images/wrapped.png')} 
-              style={{ width: 250, height: 250, borderRadius: 12, marginBottom: 16 }}
-              resizeMode="contain"
-            />
-            <TouchableOpacity
-              onPress={() => setShowWrappedModal(false)}
-              style={{
-                backgroundColor: '#3B82F6',
-                borderRadius: 8,
-                paddingVertical: 10,
-                alignItems: 'center',
-                width: 120,
-                alignSelf: 'center',
-              }}
-            >
-              <Text style={{ color: '#fff', fontSize: 16, textAlign: 'center' }}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }
