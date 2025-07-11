@@ -468,6 +468,9 @@ export default function ChatScreen() {
                   if (contact.name === 'UNIT2001 Study Group') {
                     router.push('/unit2001-group');
                   }
+                  if (contact.name === 'Dr. Mike Rodriguez') {
+                    router.push('/unit-coordinator-chat');
+                  }
                 }}
               >
                 <View style={styles.contactIcon}>
