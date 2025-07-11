@@ -294,7 +294,7 @@ export default function ChatScreen() {
                       text: studyTips, 
                       sender: 'ai' 
                     }]);
-                  } catch {
+                  } catch (error) {
                     setMessages(prev => [...prev, { 
                       id: prev.length + 1, 
                       text: 'Failed to get study tips. Please try again.', 
@@ -324,7 +324,7 @@ export default function ChatScreen() {
                       text: wellbeingTips, 
                       sender: 'ai' 
                     }]);
-                  } catch {
+                  } catch (error) {
                     setMessages(prev => [...prev, { 
                       id: prev.length + 1, 
                       text: 'Failed to get wellbeing tips. Please try again.', 
@@ -350,7 +350,7 @@ export default function ChatScreen() {
                       text: timeTips, 
                       sender: 'ai' 
                     }]);
-                  } catch {
+                  } catch (error) {
                     setMessages(prev => [...prev, { 
                       id: prev.length + 1, 
                       text: 'Failed to get time management tips. Please try again.', 
