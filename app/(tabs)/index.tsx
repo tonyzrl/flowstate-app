@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import Card from '@/components/Card';
@@ -48,6 +48,27 @@ export default function HomeScreen() {
   const today = new Date();
   const quoteOfTheDay = dailyQuotes[today.getDate() % dailyQuotes.length];
 
+  const [showWrappedModal, setShowWrappedModal] = useState(false);
+
+  const wellbeingStats = {
+    mood: "😊 Great",
+    avgSleep: "7.5h/night",
+    exercise: "4x/week",
+  };
+
+  const studyStats = {
+    totalHours: "42h",
+    avgDaily: "1.4h",
+    topSubject: "Math",
+    focusScore: "88%",
+  };
+
+  const scheduleStats = [
+    { title: "UNIT1000 Exam", date: "Tomorrow 10:00 AM" },
+    { title: "Design Report Due", date: "Friday 11:59 PM" },
+    { title: "Study Group Meeting", date: "Saturday 2:00 PM" },
+  ];
+
   return (
     <View style={styles.container}>
       {/* Hero Section */}
@@ -64,12 +85,12 @@ export default function HomeScreen() {
               <Text style={styles.heroGreeting}>{greeting},</Text>
               <Text style={styles.heroName}>{userName}</Text>
             </View>
-            <View style={styles.profileContainer}>
+            <TouchableOpacity onPress={() => setShowWrappedModal(true)} style={styles.profileContainer}>
               <Image
                 source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2' }}
                 style={styles.profileImage}
               />
-            </View>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </View>
@@ -142,6 +163,65 @@ export default function HomeScreen() {
           </Card>
         </View>
       </ScrollView>
+
+      <Modal
+        visible={showWrappedModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowWrappedModal(false)}
+      >
+        <View style={{
+          flex: 1,
+          backgroundColor: 'rgba(0,0,0,0.3)',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <View style={{
+            backgroundColor: '#fff',
+            borderRadius: 16,
+            padding: 24,
+            width: '90%',
+            maxHeight: '80%',
+          }}>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 18, textAlign: 'center' }}>
+              Your Monthly Wrapped
+            </Text>
+            {/* Wellbeing Section */}
+            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Wellbeing</Text>
+            <View style={{ marginBottom: 16 }}>
+              <Text>Mood: {wellbeingStats.mood}</Text>
+              <Text>Avg Sleep: {wellbeingStats.avgSleep}</Text>
+              <Text>Exercise: {wellbeingStats.exercise}</Text>
+            </View>
+            {/* Study Section */}
+            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Study</Text>
+            <View style={{ marginBottom: 16 }}>
+              <Text>Total Study Hours: {studyStats.totalHours}</Text>
+              <Text>Avg Daily: {studyStats.avgDaily}</Text>
+              <Text>Top Subject: {studyStats.topSubject}</Text>
+              <Text>Focus Score: {studyStats.focusScore}</Text>
+            </View>
+            {/* Schedules Section */}
+            <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 8 }}>Schedules</Text>
+            <View style={{ marginBottom: 16 }}>
+              {scheduleStats.map((item, idx) => (
+                <Text key={idx}>{item.title} — {item.date}</Text>
+              ))}
+            </View>
+            <TouchableOpacity
+              onPress={() => setShowWrappedModal(false)}
+              style={{
+                backgroundColor: '#3B82F6',
+                borderRadius: 8,
+                paddingVertical: 10,
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: '#fff', fontSize: 16 }}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
