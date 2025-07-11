@@ -68,10 +68,6 @@ export default function TeacherViewScreen() {
     { title: "Faculty Meeting", date: "Monday 3:00 PM" },
   ];
 
-  const navigateToStudentView = () => {
-    router.back();
-  };
-
   return (
     <View style={styles.container}>
       {/* Hero Section */}
@@ -186,12 +182,6 @@ export default function TeacherViewScreen() {
                 <Text style={styles.actionText}>Messages</Text>
               </TouchableOpacity>
             </View>
-          </Card>
-
-          <Card title="View Options">
-            <TouchableOpacity style={styles.swapButton} onPress={navigateToStudentView}>
-              <Text style={styles.swapButtonText}>Swap to Student View</Text>
-            </TouchableOpacity>
           </Card>
         </View>
       </ScrollView>
@@ -424,17 +414,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Medium',
     color: '#374151',
     textAlign: 'center',
-  },
-  swapButton: {
-    backgroundColor: '#3B82F6',
-    borderRadius: 8,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  swapButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontFamily: 'Inter-Medium',
   },
 }); 
