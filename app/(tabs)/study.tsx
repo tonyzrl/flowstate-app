@@ -78,6 +78,11 @@ export default function StudyScreen() {
         <View style={styles.header}>
           <Text style={styles.title}>Study</Text>
           <Text style={styles.subtitle}>Track your learning journey</Text>
+          <View style={styles.efficiencyMessageContainer}>
+            <Text style={styles.efficiencyMessage}>
+              Your study has been 10% more efficient this week than last week. Keep up the great work!
+            </Text>
+          </View>
         </View>
 
         <Card title="Learning Style">
@@ -187,6 +192,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     color: '#6B7280',
     marginTop: 4,
+  },
+  efficiencyMessageContainer: {
+    marginTop: 32,
+    marginBottom: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  efficiencyMessage: {
+    fontSize: 24,
+    fontStyle: 'italic',
+    color: '#6B7280',
+    textAlign: 'center',
   },
   learningStyles: {
     flexDirection: 'row',
