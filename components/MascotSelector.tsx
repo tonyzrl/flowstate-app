@@ -108,7 +108,7 @@ export default function MascotSelector({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0f2fe',
   },
   title: {
     fontSize: 24,
@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#E5E7EB',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#FFFFFF',
     minWidth: 100,
   },
   selectedMascotType: {
     borderColor: '#3B82F6',
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#FFFFFF',
   },
   mascotTypeImage: {
     width: 60,
@@ -168,13 +168,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#FFFFFF',
     marginBottom: 10,
     width: '18%',
   },
   selectedMood: {
     borderColor: '#3B82F6',
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#FFFFFF',
   },
   moodImage: {
     width: 40,

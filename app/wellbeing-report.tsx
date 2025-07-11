@@ -228,7 +228,7 @@ export default function WellbeingReportScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4FAFA',
+    backgroundColor: '#e0f2fe',
   },
   header: {
     flexDirection: 'row',

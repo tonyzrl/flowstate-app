@@ -70,7 +70,7 @@ export default function UnitCoordinatorChat() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#e0f2fe',
     paddingHorizontal: 16,
     paddingTop: 24,
   },

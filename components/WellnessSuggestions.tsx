@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 8,
     padding: 10,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     marginHorizontal: 4,
     paddingVertical: 6,

@@ -270,7 +270,7 @@ export default function WellbeingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4FAFA',
+    backgroundColor: '#e0f2fe',
   },
   scrollView: {
     flex: 1,

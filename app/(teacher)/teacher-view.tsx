@@ -270,7 +270,7 @@ export default function TeacherViewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4FAFA',
+    backgroundColor: '#e0f2fe',
   },
   heroSection: {
     height: 200,

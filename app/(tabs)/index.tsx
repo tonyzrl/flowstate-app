@@ -193,7 +193,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4FAFA',
+    backgroundColor: '#e0f2fe',
   },
   heroSection: {
     height: 200,
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#e0f2fe',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     marginTop: -24,

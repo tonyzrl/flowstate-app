@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#F4FAFA',
+        backgroundColor: '#e0f2fe',
     },
     title: {
         fontSize: 24,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     resultContainer: {
         marginTop: 12,
         padding: 12,
-        backgroundColor: '#B8E4C9',
+        backgroundColor: '#FFFFFF',
         borderRadius: 8,
     },
     resultTitle: {
