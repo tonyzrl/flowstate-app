@@ -6,6 +6,7 @@ import Card from '@/components/Card';
 import FormattedText from '@/components/FormattedText';
 import { Send, Bot, User, Users, GraduationCap, Lightbulb, Plus, X, Brain, BookOpen, Heart, Maximize2, Minimize2 } from 'lucide-react-native';
 import { getWellbeingInsights, getStudyTips, getTimeManagementTips, getFocusTips, testHuggingFaceAPI } from '@/services/api';
+import WellnessSuggestions from '@/components/WellnessSuggestions';
 
 export default function ChatScreen() {
   const [message, setMessage] = useState('');
@@ -56,6 +57,8 @@ export default function ChatScreen() {
     'Get help with creating a balanced study schedule',
     'Find study partners for your difficult subjects',
   ];
+
+  const [wellnessModal, setWellnessModal] = useState<{type: string, visible: boolean}>({type: '', visible: false});
 
   const sendMessage = async () => {
     if (message.trim() && !isLoading) {
@@ -258,6 +261,12 @@ export default function ChatScreen() {
                   {msg.sender === 'ai' ? (
                     <View style={[styles.messageText, styles.aiMessageText]}>
                       <FormattedText text={msg.text} />
+                      <WellnessSuggestions
+                        onVR={() => setWellnessModal({type: 'vr', visible: true})}
+                        onBreathing={() => setWellnessModal({type: 'breathing', visible: true})}
+                        onMeditation={() => setWellnessModal({type: 'meditation', visible: true})}
+                        onSounds={() => setWellnessModal({type: 'sounds', visible: true})}
+                      />
                     </View>
                   ) : (
                   <Text style={[
@@ -670,6 +679,31 @@ export default function ChatScreen() {
               onPress={addContact}
             >
               <Text style={styles.addButtonText}>Add Contact</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        visible={wellnessModal.visible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setWellnessModal({type: '', visible: false})}
+      >
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)'}}>
+          <View style={{backgroundColor: '#fff', borderRadius: 16, padding: 24, maxWidth: 320, alignItems: 'center'}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 12}}>Wellness Resource</Text>
+            <Text style={{fontSize: 15, color: '#374151', textAlign: 'center', marginBottom: 16}}>
+              {wellnessModal.type === 'vr' && 'To try the 360° VR Experience, visit the Wellbeing page and tap "Calming VR Experience".'}
+              {wellnessModal.type === 'breathing' && 'To try the Breathing Exercise, visit the Wellbeing page and tap "Breathing Exercise".'}
+              {wellnessModal.type === 'meditation' && 'To try Guided Meditation, visit the Wellbeing page and tap "Guided Meditation".'}
+              {wellnessModal.type === 'sounds' && 'To listen to Relaxing Sounds, visit the Wellbeing page and tap "Relaxing Sounds".'}
+            </Text>
+            <TouchableOpacity
+              style={{backgroundColor: '#3B82F6', borderRadius: 8, paddingVertical: 10, paddingHorizontal: 24}}
+              onPress={() => setWellnessModal({type: '', visible: false})}
+            >
+              <Text style={{color: '#fff', fontSize: 16}}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
