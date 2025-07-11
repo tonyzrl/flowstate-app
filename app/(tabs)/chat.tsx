@@ -2,7 +2,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import Card from '@/components/Card';
-import { Send, Bot, User, Users, GraduationCap, Lightbulb, Plus, X, Brain, BookOpen, Heart } from 'lucide-react-native';
+import FormattedText from '@/components/FormattedText';
+import { Send, Bot, User, Users, GraduationCap, Lightbulb, Plus, X, Brain, BookOpen, Heart, Maximize2, Minimize2 } from 'lucide-react-native';
 import { getWellbeingInsights, getStudyTips, getTimeManagementTips, getFocusTips, testHuggingFaceAPI } from '@/services/api';
 
 export default function ChatScreen() {
@@ -11,6 +12,8 @@ export default function ChatScreen() {
     { id: 1, text: 'Hello! I\'m your AI study assistant. I can help you with:\n\n📚 Study tips and techniques\n💚 Wellbeing and mental health support\n⏰ Time management strategies\n\nWhat would you like to work on today?', sender: 'ai' },
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showFullscreenChat, setShowFullscreenChat] = useState(false);
+  const [fullscreenMessage, setFullscreenMessage] = useState('');
 
   const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -125,6 +128,78 @@ export default function ChatScreen() {
     }
   };
 
+  const sendFullscreenMessage = async () => {
+    if (fullscreenMessage.trim() && !isLoading) {
+      const userMessage = fullscreenMessage.trim();
+      setMessages(prev => [...prev, { id: prev.length + 1, text: userMessage, sender: 'user' }]);
+      setFullscreenMessage('');
+      setIsLoading(true);
+
+      try {
+        let aiResponse = '';
+        
+        // Analyze the message content to determine the type of help needed
+        const lowerMessage = userMessage.toLowerCase();
+        
+        if (lowerMessage.includes('study') || lowerMessage.includes('learn') || lowerMessage.includes('exam') || 
+            lowerMessage.includes('math') || lowerMessage.includes('science') || lowerMessage.includes('subject') ||
+            lowerMessage.includes('tips') || lowerMessage.includes('technique')) {
+          // Get study tips
+          const subject = lowerMessage.includes('math') ? 'Mathematics' : 
+                         lowerMessage.includes('science') ? 'Science' : 
+                         lowerMessage.includes('english') ? 'English' :
+                         lowerMessage.includes('history') ? 'History' :
+                         lowerMessage.includes('physics') ? 'Physics' :
+                         lowerMessage.includes('chemistry') ? 'Chemistry' :
+                         lowerMessage.includes('biology') ? 'Biology' : 'General Studies';
+          const difficulty = lowerMessage.includes('hard') || lowerMessage.includes('difficult') ? 'advanced' :
+                           lowerMessage.includes('easy') || lowerMessage.includes('beginner') ? 'beginner' : 'intermediate';
+          aiResponse = await getStudyTips(subject, difficulty, userMessage);
+        } else if (lowerMessage.includes('stress') || lowerMessage.includes('anxiety') || 
+                   lowerMessage.includes('mood') || lowerMessage.includes('mental') || 
+                   lowerMessage.includes('tired') || lowerMessage.includes('overwhelmed') ||
+                   lowerMessage.includes('depressed') || lowerMessage.includes('sad') ||
+                   lowerMessage.includes('worried') || lowerMessage.includes('frustrated')) {
+          // Get wellbeing insights
+          aiResponse = await getWellbeingInsights(
+            `User mentioned: ${userMessage}`,
+            'Based on recent study patterns and mood indicators',
+            userMessage
+          );
+        } else if (lowerMessage.includes('time') || lowerMessage.includes('schedule') || 
+                   lowerMessage.includes('busy') || lowerMessage.includes('manage') ||
+                   lowerMessage.includes('organize') || lowerMessage.includes('planning') ||
+                   lowerMessage.includes('pomodoro') || lowerMessage.includes('productivity')) {
+          // Time management advice
+          aiResponse = await getTimeManagementTips(userMessage);
+        } else if (lowerMessage.includes('focus') || lowerMessage.includes('concentration') ||
+                   lowerMessage.includes('distracted') || lowerMessage.includes('attention') ||
+                   lowerMessage.includes('mind') || lowerMessage.includes('zone')) {
+          // Focus tips
+          aiResponse = await getFocusTips(userMessage);
+        } else {
+          // Use the test API for general responses
+          aiResponse = await testHuggingFaceAPI(userMessage);
+        }
+
+        setMessages(prev => [...prev, { 
+          id: prev.length + 1, 
+          text: aiResponse, 
+          sender: 'ai' 
+        }]);
+      } catch (error) {
+        console.error('AI Response Error:', error);
+        setMessages(prev => [...prev, { 
+          id: prev.length + 1, 
+          text: 'I apologize, but I\'m having trouble processing your request right now. Please try again in a moment, or ask me about study tips, wellbeing, time management, or focus strategies.', 
+          sender: 'ai' 
+        }]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   const addContact = () => {
     if (newContact.name.trim() && newContact.role.trim()) {
       // Add the new contact to the contacts array
@@ -152,6 +227,15 @@ export default function ChatScreen() {
         </View>
 
         <Card title="AI Study Assistant">
+          <View style={styles.chatHeader}>
+            <Text style={styles.chatSubtitle}>Connect and get AI assistance</Text>
+            <TouchableOpacity 
+              style={styles.fullscreenButton}
+              onPress={() => setShowFullscreenChat(true)}
+            >
+              <Maximize2 size={20} color="#3B82F6" />
+            </TouchableOpacity>
+          </View>
           <View style={styles.chatContainer}>
             <ScrollView style={styles.messagesContainer} showsVerticalScrollIndicator={false}>
               {messages.map((msg) => (
@@ -166,12 +250,18 @@ export default function ChatScreen() {
                       <User size={16} color="#6B7280" />
                     )}
                   </View>
-                  <Text style={[
-                    styles.messageText,
-                    msg.sender === 'user' ? styles.userMessageText : styles.aiMessageText
-                  ]}>
-                    {msg.text}
-                  </Text>
+                  {msg.sender === 'ai' ? (
+                    <View style={[styles.messageText, styles.aiMessageText]}>
+                      <FormattedText text={msg.text} />
+                    </View>
+                  ) : (
+                    <Text style={[
+                      styles.messageText,
+                      styles.userMessageText
+                    ]}>
+                      {msg.text}
+                    </Text>
+                  )}
                 </View>
               ))}
               {isLoading && (
@@ -179,9 +269,9 @@ export default function ChatScreen() {
                   <View style={styles.messageIcon}>
                     <Bot size={16} color="#3B82F6" />
                   </View>
-                  <Text style={[styles.messageText, styles.aiMessageText]}>
-                    Thinking...
-                  </Text>
+                  <View style={[styles.messageText, styles.aiMessageText]}>
+                    <FormattedText text="Thinking..." />
+                  </View>
                 </View>
               )}
             </ScrollView>
@@ -419,6 +509,83 @@ export default function ChatScreen() {
         </Card>
       </ScrollView>
 
+      {/* Fullscreen Chat Modal */}
+      <Modal
+        visible={showFullscreenChat}
+        animationType="slide"
+        onRequestClose={() => setShowFullscreenChat(false)}
+      >
+        <SafeAreaView style={styles.fullscreenContainer}>
+          <View style={styles.fullscreenHeader}>
+            <Text style={styles.fullscreenTitle}>AI Study Assistant</Text>
+            <TouchableOpacity 
+              style={styles.closeButton}
+              onPress={() => setShowFullscreenChat(false)}
+            >
+              <Minimize2 size={24} color="#6B7280" />
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.fullscreenChatContainer}>
+            <ScrollView style={styles.fullscreenMessagesContainer} showsVerticalScrollIndicator={false}>
+              {messages.map((msg) => (
+                <View key={msg.id} style={[
+                  styles.fullscreenMessageItem,
+                  msg.sender === 'user' ? styles.fullscreenUserMessage : styles.fullscreenAiMessage
+                ]}>
+                  <View style={styles.fullscreenMessageIcon}>
+                    {msg.sender === 'ai' ? (
+                      <Bot size={20} color="#3B82F6" />
+                    ) : (
+                      <User size={20} color="#6B7280" />
+                    )}
+                  </View>
+                  {msg.sender === 'ai' ? (
+                    <View style={[styles.fullscreenMessageText, styles.fullscreenAiMessageText]}>
+                      <FormattedText text={msg.text} />
+                    </View>
+                  ) : (
+                    <Text style={[
+                      styles.fullscreenMessageText,
+                      styles.fullscreenUserMessageText
+                    ]}>
+                      {msg.text}
+                    </Text>
+                  )}
+                </View>
+              ))}
+              {isLoading && (
+                <View style={[styles.fullscreenMessageItem, styles.fullscreenAiMessage]}>
+                  <View style={styles.fullscreenMessageIcon}>
+                    <Bot size={20} color="#3B82F6" />
+                  </View>
+                  <View style={[styles.fullscreenMessageText, styles.fullscreenAiMessageText]}>
+                    <FormattedText text="Thinking..." />
+                  </View>
+                </View>
+              )}
+            </ScrollView>
+            
+            <View style={styles.fullscreenInputContainer}>
+              <TextInput
+                style={styles.fullscreenTextInput}
+                placeholder="Ask me anything..."
+                value={fullscreenMessage}
+                onChangeText={setFullscreenMessage}
+                multiline
+              />
+              <TouchableOpacity 
+                style={[styles.fullscreenSendButton, isLoading && styles.sendButtonDisabled]} 
+                onPress={sendFullscreenMessage}
+                disabled={isLoading}
+              >
+                <Send size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
+
       {/* Add Contact Modal */}
       <Modal
         visible={showAddModal}
@@ -511,6 +678,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     color: '#6B7280',
     marginTop: 4,
+  },
+  chatHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  chatSubtitle: {
+    fontSize: 14,
+    fontFamily: 'Inter-Regular',
+    color: '#6B7280',
+  },
+  fullscreenButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#F3F4F6',
   },
   chatContainer: {
     height: 300,
@@ -795,5 +978,108 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontFamily: 'Inter-Medium',
+  },
+  // Fullscreen Chat Styles
+  fullscreenContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  fullscreenHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+  },
+  fullscreenTitle: {
+    fontSize: 20,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#1F2937',
+  },
+  closeButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#F3F4F6',
+  },
+  fullscreenChatContainer: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
+  fullscreenMessagesContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  fullscreenMessageItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 16,
+  },
+  fullscreenUserMessage: {
+    flexDirection: 'row-reverse',
+  },
+  fullscreenAiMessage: {
+    flexDirection: 'row',
+  },
+  fullscreenMessageIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#F3F4F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 12,
+  },
+  fullscreenMessageText: {
+    flex: 1,
+    fontSize: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 16,
+    maxWidth: '75%',
+  },
+  fullscreenUserMessageText: {
+    backgroundColor: '#E0E7FF',
+    color: '#3730A3',
+    textAlign: 'right',
+  },
+  fullscreenAiMessageText: {
+    backgroundColor: '#FFFFFF',
+    color: '#1F2937',
+    textAlign: 'left',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  fullscreenInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+  },
+  fullscreenTextInput: {
+    flex: 1,
+    minHeight: 48,
+    maxHeight: 120,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginRight: 12,
+  },
+  fullscreenSendButton: {
+    backgroundColor: '#3B82F6',
+    borderRadius: 12,
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
