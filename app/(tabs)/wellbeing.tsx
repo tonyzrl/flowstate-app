@@ -16,7 +16,7 @@ export default function WellbeingScreen() {
   const [showMascotPopup, setShowMascotPopup] = useState(false);
   const { mascot, setMascot } = useMascot();
   const recentMoods = [
-    { day: 'Mon', mood: '😊', score: 85 },
+    { day: 'Mon', mood: '😊', score: 515 },
     { day: 'Tue', mood: '🙂', score: 75 },
     { day: 'Wed', mood: '😐', score: 60 },
     { day: 'Thu', mood: '😊', score: 90 },
