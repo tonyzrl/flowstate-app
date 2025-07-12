@@ -75,7 +75,7 @@ export default function HomeScreen() {
       {/* Hero Section */}
       <View style={styles.heroSection}>
         <Image
-          source={require('@/assets/images/nature.jpeg')}
+          source={require('../../assets/images/nature.jpeg')}
           style={styles.heroBackground}
           resizeMode="cover"
         />
@@ -88,7 +88,7 @@ export default function HomeScreen() {
             </View>
             <View style={styles.profileContainer}>
               <Image
-                source={require('@/assets/images/andre.png')}
+                source={require('../../assets/images/andre.png')}
                 style={styles.profileImage}
               />
             </View>
