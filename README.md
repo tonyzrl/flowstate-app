@@ -1,83 +1,91 @@
-FlowState — A Smart Wellbeing & Study Companion App
+# FlowState — A Smart Wellbeing & Study Companion App  
+*A Learning Futures Challenge Project by Group 19*
 
-A Learning Futures Challenge Project by Group 19
+## 🌟 Overview
+FlowState is a wellbeing–driven study companion app designed to support university students in balancing academic workload, personal responsibilities and mental wellbeing. By combining smart tracking, behavioural data, AI support and immersive technologies, FlowState aims to improve both student wellbeing and academic performance.
 
-🌟 Overview
+This project was developed for the **2025 Curtin Learning Futures Challenge**, addressing rising student stress levels and the lack of visibility educators have into student wellbeing.
 
-FlowState is a wellbeing–driven study companion app designed to support university students in balancing academic workload, work commitments, personal wellbeing, and social life. The app leverages smart tracking, AI assistance, behavioural data, and immersive technologies to improve both student wellbeing and academic performance.
+---
 
-The project was developed as part of the 2025 Curtin Learning Futures Challenge, addressing the rising levels of stress, burnout, and disengagement experienced by students, as well as the lack of visibility educators have into student wellbeing trends.
+## 🎯 Problem Statement
+University students increasingly struggle to manage study, work, personal responsibilities and mental health. This imbalance often leads to burnout, falling behind, emotional distress, and missed deadlines. Educators also lack insight into how their students are coping.
 
-🎯 Problem Statement
+FlowState addresses these issues by creating an integrated ecosystem that supports students and empowers educators through meaningful insight.
 
-University students increasingly struggle to manage study, work, personal responsibilities, and mental health simultaneously. This imbalance often leads to burnout, missed deadlines, academic decline, and emotional distress. Educators also face limited insight into how their students are coping, making timely support difficult.
+---
 
-FlowState tackles this issue by creating an integrated ecosystem of wellbeing tracking, study optimisation tools, and AI-driven feedback loops for students and educators.
+## 💡 Core Solution
+FlowState is a personalised wellbeing companion app built around three principles:
 
-💡 Core Solution
+- **Wellbeing** — detect stress early, regulate emotions, and support mental health.
+- **Productivity** — optimise study habits, scheduling and focus.
+- **Connection** — build communication channels between students, peers and educators.
 
-FlowState is a personalised wellbeing companion app that supports both students and educators by providing:
+---
 
-Real-time mood and wellbeing tracking
+## 🧠 Key Features
 
-AI-powered study and mental health assistance
+### ✨ Student Features
+- **AI Study Assistant**  
+  24/7 smart support for study questions, scheduling help, and wellbeing suggestions (powered by Hugging Face NLP models).
 
-Smart scheduling and alternative study pathways
+- **Smart Scheduler & Life Balance Insights**  
+  Detects study–work–life clashes and suggests alternative study pathways (e.g., Open Uni units).
 
-VR-based mindfulness experiences
+- **Mood Tracking & Emotional Patterns**  
+  Daily mood check-ins, emotional tone detection, and mood-adaptive UI.
 
-Wearable integration for stress detection
+- **VR-Assisted Mindfulness Pods**  
+  Immersive break experiences built with A-Frame WebVR for calming, focus, and stress relief.
 
-Peer support channels and journaling
+- **Wearable Tech Integration**  
+  Supports Apple Watch, Fitbit, VR devices and smart glasses to detect stress signals and provide early nudges.
 
-Intelligent educator dashboards to identify at-risk students early
+- **Study Wrapped**  
+  End-of-month summary highlighting study habits, wellbeing, productivity, and improvements.
 
-🧠 Key Features
-✨ For Students
+- **Peer Chat & Journaling Spaces**  
+  Unit group chats, reflection spaces and shared emotional journeys.
 
-AI Study Assistant
-Smart, supportive 24/7 help for study questions, planning, and emotional regulation (powered by Hugging Face NLP models).
+---
 
-Smart Scheduler + Suggestions
-Identifies workload imbalances between study, work, and life—provides personalised recommendations and alternative pathways (e.g., Open Uni units).
+### 👨‍🏫 Educator Features
+- **AI Teaching Assistant**  
+  Helps educators understand student engagement, wellbeing patterns, and learning behaviour.
 
-Mood Tracking & Mental Health Modules
-Daily check-ins, emotional pattern visualisations, micro-interactions, and mood-adaptive UI.
+- **Smart Teaching Overview**  
+  Summarises key class metrics, highlights at-risk students and visualises wellbeing trends.
 
-VR-Assisted Mindfulness Pods
-Immersive break experiences to help regulate stress and improve focus (built using A-Frame WebVR).
+- **Feedback Loop**  
+  Channels aggregated (privacy-safe) student insights to help educators refine unit content and teaching methods.
 
-Wearable Tech Integration
-Syncs with Apple Watch, Fitbit, smart glasses, and VR devices to detect stress patterns and provide early interventions.
+- **At-Risk Student Alerts**  
+  Detects behavioural changes and signals that indicate students may need support.
 
-Study Wrapped
-End-of-month summary of study habits, productivity, and wellbeing.
+---
 
-Peer Chat + Journaling Spaces
-Communicate with classmates, share reflections, and engage in group study communities.
+## 🧩 Technology & Integrations
+- **Hugging Face Mixtral-8x7B-Instruct** for AI chat + NLP  
+- **A-Frame (WebVR)** for VR mindfulness  
+- **Device Integration** with smart watches, VR headsets, smart glasses  
+- **University System Sync** with timetables & LMS (Canvas, Blackboard)  
+- **Calendar Import** from Google Calendar & Outlook  
 
-👨‍🏫 For Educators
+---
 
-AI Teaching Assistant
-Offers insight into student behaviour, learning styles, and wellbeing trends.
+## 🎨 Design Process
+FlowState was built using a human-centred design approach:
 
-Smart Teaching Overview
-Summarises class engagement, flags at-risk students, and visualises wellbeing metrics.
+- User Personas (Students & Educators)
+- Emotional Journey Mapping
+- Pain Points & Opportunity Identification
+- Brainstorming & Feature Prioritisation
+- Low-to-High Fidelity Wireframes
+- Prototype Testing & Iterative Refinement
 
-Feedback Loop
-Channels aggregated (privacy-safe) student insights back to educators to refine teaching methods and unit design.
+The UI emphasises calmness, clarity and emotional warmth using soft palettes and adaptive components.
 
-At-Risk Student Alerts
-Detects patterns such as absence, stress signals, or irregular study behaviour.
+---
 
-🧩 Technologies & Integrations
-
-Hugging Face API (Mixtral-8x7B-Instruct) – AI chat, suggestions, emotional tone detection
-
-A-Frame WebVR – 360° immersive mindfulness scenes
-
-Device Integrations – Smartwatches, VR headsets, smart glasses
-
-University System Sync – Timetables, LMS data, assignment deadlines
-
-Calendar Import – Google Calendar, Outlook, Blackboard
+## 📂 Repository Structure
