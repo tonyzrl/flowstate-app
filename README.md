@@ -1,23 +1,23 @@
-# FlowState — A Smart Wellbeing & Study Companion App  
+# FlowState — A Smart Wellbeing & Study Companion App 🌟
 *A Learning Futures Challenge Project by Group 19*
 
 A demo of the app is hosted at: https://flowstate-app.netlify.app/
 
-## 🌟 Overview
+## Overview
 FlowState is a wellbeing–driven study companion app designed to support university students in balancing academic workload, personal responsibilities and mental wellbeing. By combining smart tracking, behavioural data, AI support and immersive technologies, FlowState aims to improve both student wellbeing and academic performance.
 
 This project was developed for the **2025 Curtin Learning Futures Challenge**, addressing rising student stress levels and the lack of visibility educators have into student wellbeing.
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 University students increasingly struggle to manage study, work, personal responsibilities and mental health. This imbalance often leads to burnout, falling behind, emotional distress, and missed deadlines. Educators also lack insight into how their students are coping.
 
 FlowState addresses these issues by creating an integrated ecosystem that supports students and empowers educators through meaningful insight.
 
 ---
 
-## 💡 Core Solution
+## Core Solution
 FlowState is a personalised wellbeing companion app built around three principles:
 
 - **Wellbeing** — detect stress early, regulate emotions, and support mental health.
@@ -26,9 +26,9 @@ FlowState is a personalised wellbeing companion app built around three principle
 
 ---
 
-## 🧠 Key Features
+## Key Features
 
-### ✨ Student Features
+### Student Features
 - **AI Study Assistant**  
   24/7 smart support for study questions, scheduling help, and wellbeing suggestions (powered by Hugging Face NLP models).
 
@@ -52,7 +52,7 @@ FlowState is a personalised wellbeing companion app built around three principle
 
 ---
 
-### 👨‍🏫 Educator Features
+### Educator Features
 - **AI Teaching Assistant**  
   Helps educators understand student engagement, wellbeing patterns, and learning behaviour.
 
@@ -67,7 +67,7 @@ FlowState is a personalised wellbeing companion app built around three principle
 
 ---
 
-## 🧩 Technology & Integrations
+## Technology & Integrations
 - **Hugging Face Mixtral-8x7B-Instruct** for AI chat + NLP  
 - **A-Frame (WebVR)** for VR mindfulness  
 - **Device Integration** with smart watches, VR headsets, smart glasses  
@@ -76,7 +76,7 @@ FlowState is a personalised wellbeing companion app built around three principle
 
 ---
 
-## 🎨 Design Process
+## Design Process
 FlowState was built using a human-centred design approach:
 
 - User Personas (Students & Educators)
