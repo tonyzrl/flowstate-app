@@ -1,5 +1,6 @@
 # FlowState — A Smart Wellbeing & Study Companion App  
 *A Learning Futures Challenge Project by Group 19*
+A demo of the app is hosted at: https://flowstate-app.netlify.app/
 
 ## 🌟 Overview
 FlowState is a wellbeing–driven study companion app designed to support university students in balancing academic workload, personal responsibilities and mental wellbeing. By combining smart tracking, behavioural data, AI support and immersive technologies, FlowState aims to improve both student wellbeing and academic performance.
@@ -87,5 +88,3 @@ FlowState was built using a human-centred design approach:
 The UI emphasises calmness, clarity and emotional warmth using soft palettes and adaptive components.
 
 ---
-
-## 📂 Repository Structure
