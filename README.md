@@ -1,5 +1,6 @@
 # FlowState — A Smart Wellbeing & Study Companion App  
 *A Learning Futures Challenge Project by Group 19*
+
 A demo of the app is hosted at: https://flowstate-app.netlify.app/
 
 ## 🌟 Overview
